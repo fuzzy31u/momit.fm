@@ -18,7 +18,6 @@ export default function Home() {
 
         <p className={styles.description}>
         A podcast talking about Parenting and Tech.{' '}
-          {/* <code className={styles.code}>pages/index.js</code> */}
         </p>
 
         <div className={styles.grid}>
@@ -66,13 +65,24 @@ export default function Home() {
       </main>
 
       <footer className={styles.footer}>
-        <div>
-          <section>
+        <div className={styles.footer_inner}>
+          <section className={styles.footer_section}>
             <h2>momit.fmとは</h2>
             <p>momit.fmは、2人のママエンジニアが子育テックを中心に配信するポッドキャストです。</p>
           </section>
+          <section className={styles.footer_section}>
+            <h2>Feedback</h2>
+            <p>momit.fmへの感想や質問などはTwitter #momitfm またはお問い合わせフォームまでお寄せください。</p>
+          </section>
+          <section className={styles.footer_section}>
+            <h2>購読</h2>
+            <p>新しいエピソードを下記より購読できます。</p>
+            <ul>
+              <li>Apple Podcasts</li>
+            </ul>
+          </section>
         </div>
-        <span>
+        <span className={styles.footer_copyright}>
           Copyright © momit.fm
         </span>
       </footer>
