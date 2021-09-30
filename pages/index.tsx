@@ -2,12 +2,14 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
+const description = "IT企業で働く2人のエンジニアが子育テックを中心にだらだらとおしゃべりするポッドキャストです."
+
 export default function Home() {
   return (
     <div className={styles.container}>
       <Head>
         <title>momit.fm</title>
-        <meta name="description" content="IT企業で働く2人のエンジニアが子育テックを中心にだらだらとおしゃべりするポッドキャストです." />
+        <meta name="description" content={description} />
         <link rel="icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" href="/apple-touch-icon.png" sizes="180x180"></link>
         <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192"></link>
@@ -20,7 +22,7 @@ export default function Home() {
           momit.fm
         </h1>
         <p className={styles.description}>
-        A podcast talking about Parenting and Tech.{' '}
+          {description}
         </p>
       </header>      
 
@@ -40,7 +42,7 @@ export default function Home() {
         <div className={styles.footer_inner}>
           <section className={styles.footer_section}>
             <h2>momit.fmとは</h2>
-            <p>momit.fmは、IT企業で働く2人のエンジニアが子育テックを中心にだらだらとおしゃべりするポッドキャストです。</p>
+            <p>momit.fmは、{description}</p>
           </section>
           <section className={styles.footer_section}>
             <h2>Feedback</h2>
