@@ -43,6 +43,10 @@
   height: 240px;
 }
 
+.main_date {
+  color: #635f5a;
+}
+
 .footer {
   border-top: 1px solid #eaeaea;  
   /* background-color: #f9efe3; */

@@ -7,8 +7,11 @@ export default function Home() {
     <div className={styles.container}>
       <Head>
         <title>momit.fm</title>
-        <meta name="description" content="A podcast talking about Parenting & tech." />
+        <meta name="description" content="IT企業で働く2人のエンジニアが子育テックを中心にだらだらとおしゃべりするポッドキャストです." />
         <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" href="/apple-touch-icon.png" sizes="180x180"></link>
+        <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192"></link>
+        <link rel="icon" type="image/png" href="/android-chrome-512x512.png" sizes="512x512"></link>
       </Head>
 
       <header className={styles.header}>
@@ -28,7 +31,7 @@ export default function Home() {
               1. ここにタイトルを書きます &rarr;
             {/* </a> */}
           </h2>
-          <p>2021/10/XX</p>
+          <p className={styles.main_date}>2021/10/XX</p>
           <audio controls preload="none" src="#"></audio>
         </article>
       </div>    
@@ -37,11 +40,11 @@ export default function Home() {
         <div className={styles.footer_inner}>
           <section className={styles.footer_section}>
             <h2>momit.fmとは</h2>
-            <p>momit.fmは、2人のママエンジニアが子育テックを中心に配信するポッドキャストです。</p>
+            <p>momit.fmは、IT企業で働く2人のエンジニアが子育テックを中心にだらだらとおしゃべりするポッドキャストです。</p>
           </section>
           <section className={styles.footer_section}>
             <h2>Feedback</h2>
-            <p>momit.fmへの感想や質問などはTwitter #momitfm またはお問い合わせフォームまでお寄せください。</p>
+            <p>momit.fmへの感想や質問などはTwitter <a href="https://twitter.com/search?q=%23momitfm">#momitfm</a> までお寄せください。</p>
           </section>
           <section className={styles.footer_section}>
             <h2>購読</h2>
