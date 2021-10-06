@@ -27,29 +27,41 @@
   position: relative;
   text-align: center;
   color: white;
-
 }
 
 .description {
   font-size: 1rem;
+  padding: 0 1rem;
 }
 
 .main {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  margin: 2rem 1.2rem;  
+  margin: 2rem 4rem;  
+}
 
-  height: 240px;
+.main a {
+  text-decoration: underline;
 }
 
 .main_date {
   color: #635f5a;
 }
 
+.main_audio {
+  width: 100%;
+}
+
+.main_description {
+  width: 100%;
+  margin: 2rem 0;
+  line-height: 1.5;  
+}
+
 .footer {
   border-top: 1px solid #eaeaea;  
-  /* background-color: #f9efe3; */
+  background-color: #f9efe3;
   padding-bottom: 1rem;  
 }
 
@@ -70,6 +82,19 @@
   display: inline-block;
   text-align: center;
   width: 100%;
+}
+
+.footer ul {
+  padding: 0;
+}
+
+.footer ul li {
+  list-style: none;
+  line-height: 1.2rem;
+}
+
+.footer a {
+  text-decoration: underline;
 }
 
 

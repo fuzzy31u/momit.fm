@@ -2,7 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 
-const description = "IT企業で働く2人のエンジニアが子育テックを中心にだらだらとおしゃべりするポッドキャストです."
+const description = "IT企業で働く2人のエンジニアが子育テックを中心におしゃべりするポッドキャストです."
 
 export default function Home() {
   return (
@@ -30,11 +30,14 @@ export default function Home() {
         <article>
           <h2>
             {/* <a href="./episode/1"> */}
-              1. ここにタイトルを書きます &rarr;
+              1: キャリア、フェムテック、マイクラ
             {/* </a> */}
           </h2>
-          <p className={styles.main_date}>2021/10/XX</p>
-          <audio controls preload="none" src="#"></audio>
+          <p className={styles.main_date}>2021/10/05</p>
+          <audio className={styles.main_audio} controls src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2021-9-6/222691497-44100-2-5fbce5e225fd1.m4a"></audio>
+          <p className={styles.main_description}>
+          ソフトウェアエンジニア、インフラエンジニアとしてのキャリア / 育休、ママエンジニア / フェムテック、妊娠中のQOL、女性ホルモン / マイクラ、<a href="https://www.minecraft.net/ja-jp/realms/bedrock">Realms Plus</a> 、<a href="https://techkidsschool.jp/camp/real/">CA Tech Kidsマイクラキャンプ</a> 、<a href="https://www.minecraft.net/en-us/store/minecraft-java-edition">Java Edition</a> / 女性向けプログラミングブートキャンプ<a href="https://ms-engineer.jp/">Ms.Engineer</a> 1期生を募集中
+          </p>
         </article>
       </div>    
 
@@ -52,7 +55,10 @@ export default function Home() {
             <h2>購読</h2>
             <p>新しいエピソードを下記より購読できます。</p>
             <ul>
-              <li>Apple Podcasts</li>
+            <li><a href="https://anchor.fm/momitfm/episodes/1-e18cb2k">Anchor</a></li>
+            <li><a href="https://open.spotify.com/show/5F2ppZb8gxJngLlO6wlIqX">Spotify</a></li>
+            <li><a href="https://anchor.fm/s/6d02f284/podcast/rss">RSS</a></li>
+            <li><a href="https://podcasts.apple.com/us/podcast/momit-fm/id1588851585">Apple Podcasts(TBD)</a></li>
             </ul>
           </section>
         </div>
