@@ -1,5 +1,8 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPodcast, faRssSquare } from '@fortawesome/free-solid-svg-icons'
+import { faGoogle, faSpotify, faApple } from '@fortawesome/free-brands-svg-icons'
 import styles from '../styles/Home.module.css'
 
 const description = "IT企業で働く2人のエンジニアが子育テックを中心におしゃべりするポッドキャストです."
@@ -55,10 +58,11 @@ export default function Home() {
             <h2>購読</h2>
             <p>新しいエピソードを下記より購読できます.</p>
             <ul>
-            <li><a href="https://podcasts.apple.com/us/podcast/momit-fm/id1589345170">Apple Podcasts</a></li>
-            <li><a href="https://anchor.fm/momitfm/episodes/1-e18cb2k">Anchor</a></li>
-            <li><a href="https://open.spotify.com/show/5F2ppZb8gxJngLlO6wlIqX">Spotify</a></li>
-            <li><a href="https://anchor.fm/s/6d02f284/podcast/rss">RSS</a></li>
+            <li><FontAwesomeIcon icon={faApple} className={styles.footer_subscribe_icon} /> <a href="https://podcasts.apple.com/us/podcast/momit-fm/id1589345170">Apple Podcasts</a></li>
+            <li><FontAwesomeIcon icon={faGoogle} className={styles.footer_subscribe_icon} /> <a href="https://podcasts.google.com/feed/aHR0cHM6Ly9hbmNob3IuZm0vcy82ZDAyZjI4NC9wb2RjYXN0L3Jzcw">Google Podcasts</a></li>
+            <li><FontAwesomeIcon icon={faPodcast} className={styles.footer_subscribe_icon} /> <a href="https://anchor.fm/momitfm/episodes/1-e18cb2k">Anchor</a></li>
+            <li><FontAwesomeIcon icon={faSpotify} className={styles.footer_subscribe_icon} /> <a href="https://open.spotify.com/show/5F2ppZb8gxJngLlO6wlIqX">Spotify</a></li>
+            <li><FontAwesomeIcon icon={faRssSquare} className={styles.footer_subscribe_icon} /> <a href="https://anchor.fm/s/6d02f284/podcast/rss">RSS</a></li>
             </ul>
           </section>
         </div>

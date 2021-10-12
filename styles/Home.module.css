@@ -63,6 +63,7 @@
   border-top: 1px solid #eaeaea;  
   background-color: #f9efe3;
   padding-bottom: 1rem;  
+  font-size: 0.9rem;
 }
 
 .footer_inner {
@@ -72,6 +73,11 @@
 .footer_section {
   width: 100%;
   padding: 1rem;
+}
+
+.footer_subscribe_icon {
+  width: 0.8rem;
+  vertical-align: text-bottom;
 }
 
 .footer h2 {
