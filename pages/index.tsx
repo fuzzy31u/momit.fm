@@ -30,6 +30,16 @@ export default function Home() {
       </header>      
 
       <div className={styles.main}>
+      <article>
+          <h2>
+              2: スマートホーム、オンライン授業
+          </h2>
+          <p className={styles.main_date}>2021/10/18</p>
+          <audio className={styles.main_audio} controls src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2021-9-18/225120195-44100-2-584b8a81d3e61.m4a"></audio>
+          <p className={styles.main_description}>
+          スマートホーム（<a href="https://qrio.me/smartlock/">ロック</a>、<a href="https://www.tp-link.com/jp/home-networking/smart-bulb/">ライト</a>、<a href="https://www.meross.com/home">プラグ</a>、<a href="https://nature.global/">リモコン</a>） / オンライン授業
+          </p>
+        </article>
         <article>
           <h2>
             {/* <a href="./episode/1"> */}
