@@ -32,7 +32,20 @@ export default function Home() {
       <div className={styles.main}>
       <article>
           <h2>
-              2: スマートホーム、オンライン授業
+            3. Vercel / 育休中のインプット / Feed / 推薦アルゴリズムの多様性
+          </h2>
+          <p className={styles.main_date}>2021/11/09</p>
+          <audio className={styles.main_audio} controls src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2021-10-9/229785253-44100-2-c7656c4c754dc.m4a"></audio>
+          <p className={styles.main_description}>
+            <a href="https://www.pj-iforget.com/">松井さんの短編映画</a>、<a href="https://event.shoeisha.jp/devsumi/20211117">Women Developers Summit</a>、<a href="https://2021.bit-valley.jp/program/career/35">BIT VALLEY 2021#06</a>、副業タイプ、<a href="https://waffle-fes2021.peatix.com/">Waffle Festival</a>、<a href="https://gihyo.jp/magazine/wdpress">WEB+DB press</a>、<a href="https://gihyo.jp/dev/serial/01/cyberagent/0017">サイバーエージェントを支える技術的たちvol.17</a>、
+            <a href="https://nextjs.org/">Next.js</a>、<a href="https://vercel.com/">Vercel</a>、<a href="https://www.netlify.com/">Netlify</a>、
+            育休中のインプット、Podcast（<a href="https://rebuild.fm/">Rebuild.fm</a>、<a href="https://www.yancan.tech/">yancan.fm</a>、<a href="https://softwareengineeringdaily.com/category/all-episodes/exclusive-content/Podcast/">Software Engineering Daily</a>、Slack reminder、<a href="https://feedly.com/">Feedly</a>、Livedoor Feed、
+            Twitter Timelineの最適化問題、推薦アルゴリズム、機械学習の多様性、技術と倫理問題
+          </p>
+        </article>
+        <article>
+          <h2>
+            2. スマートホーム、オンライン授業
           </h2>
           <p className={styles.main_date}>2021/10/18</p>
           <audio className={styles.main_audio} controls src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2021-9-18/225120195-44100-2-584b8a81d3e61.m4a"></audio>
@@ -43,7 +56,7 @@ export default function Home() {
         <article>
           <h2>
             {/* <a href="./episode/1"> */}
-              1: キャリア、育休、フェムテック、マイクラ
+            1. キャリア、育休、フェムテック、マイクラ
             {/* </a> */}
           </h2>
           <p className={styles.main_date}>2021/10/05</p>
