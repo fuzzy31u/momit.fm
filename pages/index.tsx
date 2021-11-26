@@ -5,7 +5,7 @@ import { faPodcast, faRssSquare } from '@fortawesome/free-solid-svg-icons'
 import { faGoogle, faSpotify, faApple } from '@fortawesome/free-brands-svg-icons'
 import styles from '../styles/Home.module.css'
 
-const description = "IT企業で働く2人のエンジニアが子育テックを中心におしゃべりするポッドキャストです."
+const description = "IT企業で働くママエンジニアとママPMが、子育てやテックについてお話しするPodcastです."
 
 export default function Home() {
   return (
@@ -32,6 +32,16 @@ export default function Home() {
       <div className={styles.main}>
       <article>
           <h2>
+            4. プロマネ / 障害対応の歴史 / IT業界のジェンダーギャップ / 家事育児のマルチタスキング
+          </h2>
+          <p className={styles.main_date}>2021/11/24</p>
+          <audio className={styles.main_audio} controls src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2021-10-25/233405983-44100-2-9f01ebeb91d79.m4a"></audio>
+          <p className={styles.main_description}>
+          プロマネ、PdMとPjM、障害対応の歴史、監視ツール（<a href="https://www.nagios.org/">Nagios</a>、<a href="http://mon.sourceforge.net/">mon</a>、<a href="https://www.datadoghq.com/">DataDog</a>）、<a href="https://event.shoeisha.jp/devsumi/20211117">デブサミウーマン</a>、<a href="https://twitter.com/hashtag/devsumi?src=hashtag_click">#devsumi</a>、女性向けITカンファレンス、IT業界のジェンダーギャップ、ジェンダーバイアス、ハードルを取り除く話（<a href="https://jp.techcrunch.com/2021/08/04/yamada-shintaro-di-foundation/">山田進太郎D&amp;I財団 女子学生奨学金プログラム</a>）、<a href="https://twitter.com/_a0i/status/1460908385486839813?s=20">インフラが苦手でも大丈夫！紙芝居Kubernetes</a>、<a href="https://twitter.com/_yukamiya/status/1461147123093671936">BIT VALLEY 2021#6『副業で広がるキャリアの可能性と働き方の選択肢』</a>、<a href="https://waffle-fes2021.peatix.com/">Waffle Festival</a>、育休中の社会とのつながり、生活の合理化、家事育児のマルチタスキング
+          </p>
+        </article>
+        <article>
+          <h2>
             3. Vercel / 育休中のインプット / Feed / 推薦アルゴリズムの多様性
           </h2>
           <p className={styles.main_date}>2021/11/09</p>
@@ -39,13 +49,13 @@ export default function Home() {
           <p className={styles.main_description}>
             <a href="https://www.pj-iforget.com/">松井さんの短編映画</a>、<a href="https://event.shoeisha.jp/devsumi/20211117">Women Developers Summit</a>、<a href="https://2021.bit-valley.jp/program/career/35">BIT VALLEY 2021#06</a>、副業タイプ、<a href="https://waffle-fes2021.peatix.com/">Waffle Festival</a>、<a href="https://gihyo.jp/magazine/wdpress">WEB+DB press</a>、<a href="https://gihyo.jp/dev/serial/01/cyberagent/0017">サイバーエージェントを支える技術的たちvol.17</a>、
             <a href="https://nextjs.org/">Next.js</a>、<a href="https://vercel.com/">Vercel</a>、<a href="https://www.netlify.com/">Netlify</a>、
-            育休中のインプット、Podcast（<a href="https://rebuild.fm/">Rebuild.fm</a>、<a href="https://www.yancan.tech/">yancan.fm</a>、<a href="https://softwareengineeringdaily.com/category/all-episodes/exclusive-content/Podcast/">Software Engineering Daily</a>、Slack reminder、<a href="https://feedly.com/">Feedly</a>、Livedoor Feed、
+            育休中のインプット、Podcast（<a href="https://rebuild.fm/">Rebuild.fm</a>、<a href="https://www.yancan.tech/">yancan.fm</a>、<a href="https://softwareengineeringdaily.com/category/all-episodes/exclusive-content/Podcast/">Software Engineering Daily</a>）、<a href="https://news.ycombinator.com/news">Hacker News</a>、<a href="https://docs.github.com/en/rest/reference/activity#feeds">GitHub feed</a>、Slack reminder、<a href="https://feedly.com/">Feedly</a>、Livedoor Feed、
             Twitter Timelineの最適化問題、推薦アルゴリズム、機械学習の多様性、技術と倫理問題
           </p>
         </article>
         <article>
           <h2>
-            2. スマートホーム、オンライン授業
+            2. スマートホーム / オンライン授業
           </h2>
           <p className={styles.main_date}>2021/10/18</p>
           <audio className={styles.main_audio} controls src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2021-9-18/225120195-44100-2-584b8a81d3e61.m4a"></audio>
@@ -56,7 +66,7 @@ export default function Home() {
         <article>
           <h2>
             {/* <a href="./episode/1"> */}
-            1. キャリア、育休、フェムテック、マイクラ
+            1. キャリア / 育休 / フェムテック / マイクラ
             {/* </a> */}
           </h2>
           <p className={styles.main_date}>2021/10/05</p>
