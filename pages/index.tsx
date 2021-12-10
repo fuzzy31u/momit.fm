@@ -30,7 +30,17 @@ export default function Home() {
       </header>      
 
       <div className={styles.main}>
-      <article>
+        <article>
+          <h2>
+            5. 無意識バイアス / ジェンダーロール / 多様性と教育
+          </h2>
+          <p className={styles.main_date}>2021/12/10</p>
+          <audio className={styles.main_audio} controls src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2021-11-10/236699039-44100-2-bf458e421bd0a.m4a"></audio>
+          <p className={styles.main_description}>
+          無意識バイアス、ジェンダーロール（教育コンテンツの変化、しまじろうの家庭観）、セサミストリート<a href="https://www.sesamestreetjapan.org/Diversity-Inclusion/index.html">自閉症のキャラクター「ジュリア」</a>、Eテレ<a href="https://www.nhk.or.jp/school/tokushi/ui/">多様性への理解を深める番組「u&i」</a>、<a href="https://www.cyberagent.co.jp/way/features/list/detail/id=26859">ダイバーシティ推進プロジェクト「CAlorful」が誕生</a>、男性育休、<a href="https://www.amazon.co.jp/Google%E6%B5%81-%E3%83%80%E3%82%A4%E3%83%90%E3%83%BC%E3%82%B7%E3%83%86%E3%82%A3-%E3%82%A4%E3%83%B3%E3%82%AF%E3%83%AB%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3-%E3%82%A4%E3%83%B3%E3%82%AF%E3%83%AB%E3%83%BC%E3%82%B7%E3%83%96%E3%81%AA%E8%A3%BD%E5%93%81%E9%96%8B%E7%99%BA%E3%81%AE%E3%81%9F%E3%82%81%E3%81%AE%E6%96%B9%E6%B3%95%E3%81%A8%E5%AE%9F%E8%B7%B5-%E3%82%A2%E3%83%8B%E3%83%BC%E3%83%BB%E3%82%B8%E3%83%A3%E3%83%B3/dp/4802512163">Google流 ダイバーシティ&インクルージョン インクルーシブな製品開発のための方法と実践</a>、プロダクトインクルージョン、<a href="https://www.amazon.co.jp/%E3%83%80%E3%82%A4%E3%83%90%E3%83%BC%E3%82%B7%E3%83%86%E3%82%A3-%E3%82%A4%E3%83%B3%E3%82%AF%E3%83%AB%E3%83%BC%E3%82%B8%E3%83%A7%E3%83%B3%E7%B5%8C%E5%96%B6-%E3%81%93%E3%82%8C%E3%81%8B%E3%82%89%E3%81%AE%E7%B5%8C%E5%96%B6%E6%88%A6%E7%95%A5%E3%81%A8%E5%83%8D%E3%81%8D%E6%96%B9-%E8%8D%92%E9%87%91-%E9%9B%85%E5%AD%90/dp/4542701816">ダイバーシティ&インクルージョン経営: これからの経営戦略と働き方</a>、<a href="https://www.amazon.co.jp/%E5%A4%9A%E6%A7%98%E6%80%A7%E3%81%AE%E7%A7%91%E5%AD%A6-%E7%94%BB%E4%B8%80%E7%9A%84%E3%81%A7%E5%87%8B%E8%90%BD%E3%81%99%E3%82%8B%E7%B5%84%E7%B9%94%E3%80%81%E8%A4%87%E6%95%B0%E3%81%AE%E8%A6%96%E7%82%B9%E3%81%A7%E5%95%8F%E9%A1%8C%E3%82%92%E8%A7%A3%E6%B1%BA%E3%81%99%E3%82%8B%E7%B5%84%E7%B9%94-%E3%83%9E%E3%82%B7%E3%83%A5%E3%83%BC%E3%83%BB%E3%82%B5%E3%82%A4%E3%83%89/dp/4799327526/ref=pd_vtp_4/358-6753931-2583208?pd_rd_w=o0MMa&pf_rd_p=949e26f5-c2ef-4c96-bfde-49d7614d0317&pf_rd_r=7XPEERY0SZPBAE5HQVYQ&pd_rd_r=10415f68-08c8-49e4-9c90-5bc4ac074687&pd_rd_wg=OtPce&pd_rd_i=4799327526&psc=1">多様性の科学 画一的で凋落する組織、複数の視点で問題を解決する組織</a>、多様性に関する子どもへの声掛け・教育、<a href="https://www.washingtonpost.com/nation/2021/10/11/california-law-gender-neutral-children-toy-section/">カリフォルニア州でジェンダーニュートラルなおもちゃ売り場設置を義務付ける法律</a>
+          </p>
+        </article>
+        <article>
           <h2>
             4. プロマネ / 障害対応の歴史 / IT業界のジェンダーギャップ / 家事育児のマルチタスキング
           </h2>
