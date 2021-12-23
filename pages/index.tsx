@@ -30,6 +30,16 @@ export default function Home() {
       </header>      
 
       <div className={styles.main}>
+      <article>
+          <h2>
+            6. 行動ログ集計サイトの裏側 / プログラミング教育 / 子どもの写真問題
+          </h2>
+          <p className={styles.main_date}>2021/12/22</p>
+          <audio className={styles.main_audio} controls src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2021-11-23/239146578-44100-2-a4b4add7b4f55.m4a"></audio>
+          <p className={styles.main_description}>
+          アイスブレイク（社内イベントのレポーター、男性リスナー、フィードバック、行動力）、<a href="https://podcasters.spotify.com/">Spotify・Anchor視聴傾向まとめサイト</a>、行動ログ集計サイトの裏側、システムアーキテクチャ（<a href="https://cloud.google.com/bigquery">BigQuery</a>、<a href="https://cloud.google.com/pubsub">Cloud Pub/Sub</a>）、<a href="https://ms-engineer01.peatix.com/?lang=ja">MsEngineerサミット#1</a>澤さんの話、自動販売機のフローチャート、アルゴリズムの講義、子ども向けビジュアルプログラミング、<a href="https://scratch.mit.edu/">Scratch</a>、プログラミング的思考法、Eテレ「<a href="https://www.nhk.jp/p/pitagora/ts/WLQ76PGNW2/">ピタゴラスイッチ</a>」「<a href="https://www.nhk.or.jp/school/sougou/texico/">テキシコー</a>」、プログラミング教育、コロナ禍の運動会で1人複数デバイス撮影する話、Osmo Camera、子どもの写真どうしてる問題、保育園のスナップ写真
+          </p>
+        </article>
         <article>
           <h2>
             5. 無意識バイアス / ジェンダーロール / 多様性と教育
