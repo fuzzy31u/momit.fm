@@ -1,3 +1,4 @@
+[![nodejs](https://img.shields.io/badge/nodejs-16.13.1-blue.svg?style=flat-square)](https://nodejs.org)
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

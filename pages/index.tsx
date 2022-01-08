@@ -105,7 +105,7 @@ export default function Home() {
           </section>
           <section className={styles.footer_section}>
             <h2>Feedback</h2>
-            <p>momit.fmへの感想や質問などはTwitter <a href="https://twitter.com/search?q=%23momitfm">#momitfm</a> までお寄せください.</p>
+            <p>momit.fmへの感想や質問などはTwitter <a href="https://twitter.com/search?q=%23momitfm">#momitfm</a> または<a href='https://docs.google.com/forms/d/e/1FAIpQLSfwtvdBRjwhWyI4wvpX42knaLbQ3Ac05XVwd0mr4GFvYmT1wg/viewform'>アンケートフォーム</a>までお寄せください.</p>
           </section>
           <section className={styles.footer_section}>
             <h2>購読</h2>
