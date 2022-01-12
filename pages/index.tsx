@@ -30,7 +30,17 @@ export default function Home() {
       </header>      
 
       <div className={styles.main}>
-      <article>
+        <article>
+          <h2>
+            7. 教育現場のDX / 実家のISP・スマホプラン最適化 / GraphQL
+          </h2>
+          <p className={styles.main_date}>2022/01/11</p>
+          <audio className={styles.main_audio} controls src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2022-0-11/241794171-44100-2-530bf1ae75207.m4a"></audio>
+          <p className={styles.main_description}>
+          Courseraのリモートチームマネジメント講義<a href="https://www.coursera.org/learn/remote-team-management">「How to Manage a Remote Team」</a>、母親の時短復帰問題、小1の壁の変化、親の働き方の変化と子どもの心理、保育・教育機関のDX化（民間保育園の献立アプリ化、公立小学校の<a href="https://qubena.com/">AI型教材アプリ</a>）、アダプティブラーニング、地域格差と教育格差、実家のスマホオプション棚卸し、実家の年賀状ソフト毎年デバッグさせられる件、家のISP変更、最適化（Softbank、楽天、Nuro etc.）、IPv6対応ルーター（TP-Link）、スマートライト<a href="https://www.philips-hue.com/ja-jp">Philips Hue</a>、<a href="https://github.com/stackrole/gatsby-starter-foundation">gatsby-starter-foundation</a>、<a href="https://graphql.org/">GraphQL</a>、<a href="https://gihyo.jp/magazine/wdpress/archive/2021/vol125">WEB+DB press vol.125</a>、Web APIの変遷（<a href="https://en.wikipedia.org/wiki/Representational_state_transfer">REST</a>と<a href="https://en.wikipedia.org/wiki/SOAP">SOAP</a>、<a href="https://restfulapi.net/http-methods/">REST APIs HTTP Method</a>）、インフラオーケストレーションツール（<a href="https://www.chef.io/products/chef-infra">Chef</a>、<a href="https://www.terraform.io/">Terraform</a>、<a href="https://gihyo.jp/magazine/wdpress/archive/2021/vol122">WEB+DB press vol.122</a>
+          </p>
+        </article>
+        <article>
           <h2>
             6. 行動ログ集計サイトの裏側 / プログラミング教育 / 子どもの写真問題
           </h2>
