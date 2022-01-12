@@ -104,9 +104,14 @@
 }
 
 
-/* @media (max-width: 600px) {
-  .grid {
-    width: 100%;
+@media (max-width: 600px) {
+  .main {
+    margin: 1rem 2rem;
+  }
+  .footer_inner {
     flex-direction: column;
   }
-} */
+  .footer_section {
+    padding: 0 1rem;
+  }  
+}
