@@ -4,7 +4,8 @@
 }
 
 .header {
-  background-image: url('/cover.png');
+  background-image: url('/cover-momitfm.png');
+  background-position: center;
   background-size: cover;
   padding: 4rem 0;
   position: relative;
