@@ -39,7 +39,17 @@ export default function Home() {
       <div className={styles.main}>
         <article>
           <h2>
-            7. 教育現場のDX / 実家のISP・スマホプラン最適化 / GraphQL
+            8. デザインリニューアル / インポスターシンドローム
+          </h2>
+          <p className={styles.main_date}>2022/01/26</p>
+          <audio className={styles.main_audio} controls src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2022-0-26/244415080-44100-2-7e26fb5a1e4e2.m4a"></audio>
+          <p className={styles.main_description}>
+          momit.fmのメインビジュアルを<a href="https://twitter.com/yukahiiragi">柊有花さん</a>にデザインしていただいた話、<a href="https://prtimes.jp/main/html/rd/p/000000328.000020853.html">モロゾフのショコラギャラリー</a>、<a href="https://www.1101.com/store/techo/">ほぼ日手帳</a>、Anchorの機能を試してる話（poll, trailer）、<a href="https://music.amazon.co.jp/podcasts/b355900d-b05b-4366-83ae-d7bf3a22d84a/momit-fm">Amazon podcast</a>にも配信開始しました、子ども向け動画配信サービスのサブスク地獄になる話、子どもがごっこ遊びする時にスマートスピーカーでBGMかけてる話、末っ子の保育園が決まりましたyay、<a href="https://www.city.setagaya.lg.jp/mokuji/kodomo/002/003/d00161213.html">ワークスペース付きおでかけ広場</a>、内閣府男女共同参画局の<a href="https://twitter.com/danjokyoku/status/1483348438670577665?s=20">「仕事と子育て等の両立を阻害する慣行等」に関する事例の収集・分析</a>、<a href="https://branchkids.jp/">Branch</a>-苦手なことを克服して社会に溶け込むより、好きなことで自信を創って社会とつながろう-、育休中の落とし穴（育児休業給付金に上限がある話、育児休業給付金が時短復帰だとさらに下がる話）、インポスターシンドロームを克服しようとしてる話、<a href="https://www.amazon.co.jp/LEAN-%E3%83%AA%E3%83%BC%E3%83%B3%E3%83%BB%E3%82%A4%E3%83%B3-%E5%A5%B3%E6%80%A7%E3%80%81%E4%BB%95%E4%BA%8B%E3%80%81%E3%83%AA%E3%83%BC%E3%83%80%E3%83%BC%E3%81%B8%E3%81%AE%E6%84%8F%E6%AC%B2-%E3%82%B7%E3%82%A7%E3%83%AA%E3%83%AB%E3%83%BB%E3%82%B5%E3%83%B3%E3%83%89%E3%83%90%E3%83%BC%E3%82%B0/dp/4532318971">LEAN IN</a>、<a href="https://www.womentechmakers.com/">Women Techmakers</a>、<a href="https://twitter.com/_yukamiya/status/1462007370754658312?s=20">仮にエンジニアの半数が女性だったら</a>、ジェンダーギャップ解消活動をしているワケ
+          </p>
+        </article>
+        <article>
+          <h2>
+            7. 教育現場のDX / 年末年始ISP・スマホプラン最適化 / GraphQL
           </h2>
           <p className={styles.main_date}>2022/01/11</p>
           <audio className={styles.main_audio} controls src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2022-0-11/241794171-44100-2-530bf1ae75207.m4a"></audio>
