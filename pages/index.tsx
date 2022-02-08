@@ -5,8 +5,18 @@ import { faPodcast, faRssSquare } from '@fortawesome/free-solid-svg-icons'
 import { faGoogle, faSpotify, faApple, faAmazon } from '@fortawesome/free-brands-svg-icons'
 import styles from '../styles/Home.module.css'
 
-const description = "IT企業で働くママエンジニアとママPMが、子育てやテックについてお話しするPodcastです."
+function initGA() {  
+  return {__html: `
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
+      gtag('config', 'G-PXK0BSCDXQ');
+      gtag('config', 'UA-219601984-1');  
+  `}
+}
+
+const description = "IT企業で働くママエンジニアとママPMが、子育てやテックについてお話しするPodcastです."
 export default function Home() {
   return (
     <div className={styles.container}>
@@ -24,6 +34,8 @@ export default function Home() {
         <meta name="og:image" content="./sq-momitfm-gray.png"></meta>
         <link rel="manifest" href="/site.webmanifest" />
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-PXK0BSCDXQ"></script>
+        <script dangerouslySetInnerHTML={initGA()} />
       </Head>
 
       <header className={styles.header}>
