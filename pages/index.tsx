@@ -51,6 +51,16 @@ export default function Home() {
       <div className={styles.main}>
         <article>
           <h2>
+            9. コロナ自粛生活 / マイクラとプログラミングと英語
+          </h2>
+          <p className={styles.main_date}>2022/01/26</p>
+          <audio className={styles.main_audio} controls src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2022-1-9/246970700-44100-2-75064241306f5.m4a"></audio>
+          <p className={styles.main_description}>
+          家族に陽性者が出た話、<a href="https://www3.nhk.or.jp/news/html/20220202/k10013463921000.html">濃厚接触者の待機期間短縮</a>、コロナ対策に関するワークアラウンド（給食15分以内ルール）、マイクラどっぷり生活、オンライン授業を正しく受けるためのチェックリスト、マイクラクロスプラットフォームでマルチプレイするためのアカウント整備（ニンテンドー・Microsoft・XBox...）、<a href="https://www.youtube.com/channel/UCM3yhFc0-fBFuvqx1Vg2YNQ">まいぜんシスターズ</a>、<a href="https://amzn.to/3gw1xvx">まいぜんシスターズとマイクラを遊ぼう! (扶桑社ムック)</a>、コマンド使うことで必然的に英単語が学べる話、コマンドブロック、レッドストーン回路、ゲーミングPC購入or自作？、ChromeBookでマイクラは動くのか、<a href="https://www.minecraft.net/en-us/store/minecraft-java-edition">Minecraft Java Edition</a><br></br>
+          </p>
+        </article>
+        <article>
+          <h2>
             8. デザインリニューアル / インポスターシンドローム
           </h2>
           <p className={styles.main_date}>2022/01/26</p>
