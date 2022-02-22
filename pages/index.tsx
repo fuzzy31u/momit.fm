@@ -51,7 +51,17 @@ export default function Home() {
       <div className={styles.main}>
         <article>
           <h2>
-            9. コロナ自粛生活 / マイクラとプログラミングと英語
+            10. 英会話とキャリアと子どもへの影響
+          </h2>
+          <p className={styles.main_date}>2022/02/22</p>
+          <audio className={styles.main_audio} controls src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2022-1-22/249788164-44100-2-5165bc8b4c81.m4a"></audio>
+          <p className={styles.main_description}>
+            <a href="https://aladdin.popin.cc/">popIn Aladdin</a>、<a href="https://www.fukushihoken.metro.tokyo.lg.jp/kodomo/shussan/tokyo_shussanouen.html">赤ちゃんファースト</a>、英会話レッスン、マスク問題につき対面よりオンラインのほうが良いのでは問題、英会話を習っている目的、エンジニアと英語、短期留学で死にそうな体験をした話、<a href="https://www.oreilly.com/conferences/oscon.html">O&apos;Reilly OSCON</a>、<a href="https://nativecamp.net">Native Camp</a>、English Cafe、オンライン英会話で子どもが乱入してくる話、ビジネス英会話比較検討（<a href="https://www.bizmates.jp/">Bizmates</a>, <a href="https://www.cambly.com/english?lang=en">CAMBLY</a>, Native Camp）
+          </p>
+        </article>
+        <article>
+          <h2>
+            9. コロナ隔離生活 / マイクラとプログラミングと英語
           </h2>
           <p className={styles.main_date}>2022/01/26</p>
           <audio className={styles.main_audio} controls src="https://d3ctxlq1ktw2nl.cloudfront.net/staging/2022-1-9/246970700-44100-2-75064241306f5.m4a"></audio>
