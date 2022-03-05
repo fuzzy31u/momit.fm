@@ -1,5 +1,6 @@
 import xml2js from "xml2js";
 import Footer from "../../components/Footer";
+import Head from "../../components/Head";
 import Header from "../../components/Header";
 import { rssUrl } from "../../const";
 import styles from '../../styles/Home.module.css'
@@ -73,14 +74,15 @@ export default function Episode({item}){
 
     return (
             <>
-            <Header></Header>
-            <article className={styles.main}>
-                <h2>{item.title}</h2>
-                <p className={styles.detail_date}>{fmtDate}</p>
-                <audio className={styles.main_audio} controls src={item.enclosure[0]["$"]["url"]}></audio>
-                <div className={styles.main_description} dangerouslySetInnerHTML={{__html: item["description"][0]}}></div>
-            </article>
-            <Footer></Footer>
+                <Head></Head>
+                <Header></Header>
+                <article className={styles.main}>
+                    <h2>{item.title}</h2>
+                    <p className={styles.detail_date}>{fmtDate}</p>
+                    <audio className={styles.main_audio} controls src={item.enclosure[0]["$"]["url"]}></audio>
+                    <div className={styles.main_description} dangerouslySetInnerHTML={{__html: item["description"][0]}}></div>
+                </article>
+                <Footer></Footer>
             </>
     );
 }
