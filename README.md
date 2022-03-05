@@ -2,11 +2,10 @@
 [![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
 ![Vercel](https://vercelbadge.vercel.app/api/fuzzy31u/momitfm)
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
-
 # Overview
-This is a website repository for https://momit.fm
-![momit.fm](https://www.momit.fm/cover-momitfm.png)
+This is a website repository for podcast, https://momit.fm 🍇
+
+![momit.fm](https://s3-us-west-2.amazonaws.com/anchor-generated-image-bank/production/podcast_uploaded_nologo400/18189097/18189097-1643073624489-d9fed6b7c887c.jpg)
 
 ## Getting Started
 
