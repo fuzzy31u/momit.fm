@@ -29,8 +29,8 @@ export default function Head() {
             <meta name="og:image" content="./sq-momitfm-gray.png"></meta>
             <link rel="manifest" href="/site.webmanifest" />
             <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
-            <Script async src="https://www.googletagmanager.com/gtag/js?id=G-PXK0BSCDXQ"></Script>
-            <Script dangerouslySetInnerHTML={initGA()} />
+            <script async src="https://www.googletagmanager.com/gtag/js?id=G-PXK0BSCDXQ" />
+            <script dangerouslySetInnerHTML={initGA()} />
       </NextHead>
     )
 }
