@@ -1,9 +1,10 @@
-import {default as NextHead} from 'next/head';
+import { default as NextHead } from 'next/head';
 import Script from "next/script";
 import { siteDescription } from '../const';
 
-function initGA() {  
-    return {__html: `
+function initGA() {
+    return {
+        __html: `
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
@@ -11,13 +12,13 @@ function initGA() {
         gtag('config', 'G-PXK0BSCDXQ');
         gtag('config', 'UA-219601984-1');  
     `}
-  }
-    
-export default function Head() {
+}
+
+export default function Head({ title, description }) {
     return (
         <NextHead>
-            <title>momit.fm</title>
-            <meta name="description" content={siteDescription} />
+            <title>{title}</title>
+            <meta name="description" content={description} />
             <meta name="msapplication-TileColor" content="#da532c" />
             <meta name="theme-color" content="#ffffff"></meta>
             <link rel="icon" href="/favicon.ico" />
@@ -26,11 +27,16 @@ export default function Head() {
             <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
             <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192"></link>
             <link rel="icon" type="image/png" href="/android-chrome-512x512.png" sizes="512x512"></link>
-            <meta name="og:image" content="./sq-momitfm-gray.png"></meta>
+            <meta property="og:title" content={title} />
+            <meta property="og:description" content={description} />
+            <meta property="og:image" content="/sq-momitfm-gray.png"></meta>
+            <meta name="twitter:card" content="summary"></meta>
+            <meta name="twitter:site" content="@_yukamiya"></meta>
+            <meta name="twitter:creator" content="@_yukamiya"></meta>
             <link rel="manifest" href="/site.webmanifest" />
             <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
             <script async src="https://www.googletagmanager.com/gtag/js?id=G-PXK0BSCDXQ" />
             <script dangerouslySetInnerHTML={initGA()} />
-      </NextHead>
+        </NextHead>
     )
 }
