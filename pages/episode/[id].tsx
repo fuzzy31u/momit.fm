@@ -55,15 +55,16 @@ async function fetchRSS() {
 }
 
 export default function Episode({ item }) {
+    const description = item["description"][0];
     return (
         <>
-            <Head></Head>
+            <Head title={`momit.fm - ${item.title}`} description={description}></Head>
             <Header></Header>
             <article className={styles.main}>
                 <h2 className={styles.main_title}>{item.title}</h2>
                 <p className={styles.detail_date}>{formatDate(item.pubDate)}</p>
                 <audio className={styles.main_audio} controls src={item.enclosure[0]["$"]["url"]}></audio>
-                <div className={styles.main_description} dangerouslySetInnerHTML={{ __html: item["description"][0] }}></div>
+                <div className={styles.main_description} dangerouslySetInnerHTML={{ __html: description }}></div>
             </article>
             <Footer></Footer>
         </>

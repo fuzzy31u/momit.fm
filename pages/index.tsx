@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from "next/link";
 import styles from '../styles/Home.module.css'
 import xml2js from "xml2js";
-import { rssUrl } from '../const';
+import { rssUrl, siteDescription } from '../const';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Head from '../components/Head';
@@ -33,7 +33,7 @@ export async function getStaticProps() {
 export default function Home(items: main.RSS["item"]) {
   return (
     <div className={styles.container}>
-      <Head></Head>
+      <Head title="momit.fm" description={siteDescription}></Head>
       <Header></Header>
       <div className={styles.main}>
         {
