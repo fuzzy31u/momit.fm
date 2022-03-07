@@ -3,8 +3,8 @@
 [![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/)
 <!-- ![Vercel](https://vercelbadge.vercel.app/api/fuzzy31u/momitfm) -->
 
-# About
-This is a website repository for https://momit.fm, a podcast for parenting and tech 🍇
+# momit.fm
+🍒 This is a website repository for https://momit.fm, a podcast for parenting and tech 🍇
 
 ![momit.fm](https://s3-us-west-2.amazonaws.com/anchor-generated-image-bank/production/podcast_uploaded_nologo400/18189097/18189097-1643073624489-d9fed6b7c887c.jpg)
 
