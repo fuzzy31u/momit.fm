@@ -7,6 +7,8 @@ import { rssUrl } from '../const';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Head from '../components/Head';
+import { formatDate } from '../util';
+import { ReactChild, ReactFragment, ReactPortal } from 'react';
 
 export async function getStaticProps() {
   const res = await fetch(rssUrl);
@@ -14,7 +16,11 @@ export async function getStaticProps() {
   let parser = new xml2js.Parser();
 
   let item = [];
-  parser.parseString(text, (err, r) => {
+  parser.parseString(text, (err: any, r: { rss: { channel: { item: any[]; }[]; }; }) => {
+    if (err) {
+      console.error(err);
+      return
+    }
     item = r.rss.channel[0].item;
   })
   return {
@@ -24,33 +30,27 @@ export async function getStaticProps() {
   };
 }
 
-export default function Home(item) {
+export default function Home(items: main.RSS["item"]) {
   return (
     <div className={styles.container}>
       <Head></Head>
       <Header></Header>
       <div className={styles.main}>
-          {
-            item["item"].map(e => {
-              let id = e["itunes:episode"]
-              // const fmtDate = new Date(e.pubDate).toISOString().split('T')[0]
-              const d = new Date(e.pubDate)
-              const month = '' + (d.getMonth() + 1),
-                  day = '' + d.getDate(),
-                  year = d.getFullYear();
-              const fmtDate = [year, month, day].join("/");
-          
-              return (
-                <article key={`ep-${id}`}>
-                  <h2>
-                    <Link href={`/episode/${id}`}>{e.title[0]}</Link>
-                  </h2>
-                  <p className={styles.main_date}>{fmtDate}</p>
-                  {/* <div className={styles.main_description} dangerouslySetInnerHTML={{__html: e.description}}></div>                               */}
-                </article>
-              )
-            })
-          }
+        {
+          items["item"].map((item: { [x: string]: any; title: (boolean | ReactChild | ReactFragment | ReactPortal)[]; pubDate: string; }) => {
+            let id = item["itunes:episode"]
+
+            return (
+              <article key={`ep-${id}`}>
+                <h2 className={styles.main_title}>
+                  <Link href={`/episode/${id}`}>{item.title[0]}</Link>
+                </h2>
+                <p className={styles.main_date}>{formatDate(item.pubDate)}</p>
+                {/* <div className={styles.main_description} dangerouslySetInnerHTML={{ __html: item["description"][0] }}></div> */}
+              </article>
+            )
+          })
+        }
       </div>
       <Footer></Footer>
     </div>
