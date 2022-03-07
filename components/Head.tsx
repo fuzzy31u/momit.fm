@@ -29,7 +29,7 @@ export default function Head({ title, description }) {
             <link rel="icon" type="image/png" href="/android-chrome-512x512.png" sizes="512x512"></link>
             <meta property="og:title" content={title} />
             <meta property="og:description" content={description} />
-            <meta property="og:image" content="/sq-momitfm-gray.png"></meta>
+            <meta property="og:image" content="https://s3-us-west-2.amazonaws.com/anchor-generated-image-bank/production/podcast_uploaded_nologo400/18189097/18189097-1643073624489-d9fed6b7c887c.jpg"></meta>
             <meta name="twitter:card" content="summary"></meta>
             <meta name="twitter:site" content="@_yukamiya"></meta>
             <meta name="twitter:creator" content="@_yukamiya"></meta>
