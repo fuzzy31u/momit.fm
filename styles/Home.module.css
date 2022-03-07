@@ -43,15 +43,20 @@
 }
 
 .main article {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .main a {
   text-decoration: underline;
 }
 
+.main_title {
+  margin-bottom: 8px;
+}
+
 .main_date {
   color: #635f5a;
+  margin-top: 0;
 }
 
 .main_audio {
@@ -66,6 +71,7 @@
 
 .detail_date {
   color: #635f5a;
+  margin-top: 0;
   margin-bottom: 2rem;
 }
 
