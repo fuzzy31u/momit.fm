@@ -58,7 +58,7 @@ export default function Episode({ item }) {
     const description = item["description"][0];
     return (
         <>
-            <Head title={`momit.fm - ${item.title}`} description={description}></Head>
+            <Head title={item.title} description={description}></Head>
             <Header></Header>
             <article className={styles.main}>
                 <h2 className={styles.main_title}>{item.title}</h2>
