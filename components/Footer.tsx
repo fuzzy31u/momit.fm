@@ -16,6 +16,10 @@ export default function Footer() {
         <section className={styles.footer_section}>
           <h2>momit.fmとは</h2>
           <p>momit.fmは、{siteDescription}</p>
+          <p>
+            momit.fm のWebメディア <a href="https://hub.momit.fm/">momit hub</a>{" "}
+            では momit.fm でお話しした内容を記事にしています.
+          </p>
         </section>
         <section className={styles.footer_section}>
           <h2>Feedback</h2>
@@ -24,7 +28,7 @@ export default function Footer() {
             <a href="https://twitter.com/search?q=%23momitfm">#momitfm</a>{" "}
             または
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSfwtvdBRjwhWyI4wvpX42knaLbQ3Ac05XVwd0mr4GFvYmT1wg/viewform">
-              アンケートフォーム
+              お便りフォーム
             </a>
             までお寄せください.
           </p>
