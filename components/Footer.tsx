@@ -5,6 +5,7 @@ import {
   faSpotify,
   faApple,
   faAmazon,
+  faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import styles from "../styles/Home.module.css";
 import { rssUrl, siteDescription } from "../const";
@@ -24,7 +25,7 @@ export default function Footer() {
         <section className={styles.footer_section}>
           <h2>Feedback</h2>
           <p>
-            momit.fmへの感想や質問などはTwitter{" "}
+            momit.fmへの感想や質問などはX{" "}
             <a href="https://twitter.com/search?q=%23momitfm">#momitfm</a>{" "}
             または
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSfwtvdBRjwhWyI4wvpX42knaLbQ3Ac05XVwd0mr4GFvYmT1wg/viewform">
@@ -48,11 +49,11 @@ export default function Footer() {
             </li>
             <li>
               <FontAwesomeIcon
-                icon={faGoogle}
+                icon={faYoutube}
                 className={styles.footer_subscribe_icon}
               />{" "}
-              <a href="https://podcasts.google.com/feed/aHR0cHM6Ly9hbmNob3IuZm0vcy82ZDAyZjI4NC9wb2RjYXN0L3Jzcw">
-                Google Podcasts
+              <a href="https://www.youtube.com/channel/UCcZEWYmXzUaWw6Aslynpq9g">
+                YouTube
               </a>
             </li>
             <li>
@@ -72,13 +73,6 @@ export default function Footer() {
               <a href="https://open.spotify.com/show/5F2ppZb8gxJngLlO6wlIqX">
                 Spotify
               </a>
-            </li>
-            <li>
-              <FontAwesomeIcon
-                icon={faPodcast}
-                className={styles.footer_subscribe_icon}
-              />{" "}
-              <a href="https://anchor.fm/momitfm/episodes/1-e18cb2k">Anchor</a>
             </li>
             <li>
               <FontAwesomeIcon
