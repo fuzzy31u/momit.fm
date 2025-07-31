@@ -1,0 +1,2 @@
+# This file stores the hash of the RSS feed to detect changes
+# It will be automatically updated by the GitHub Action
