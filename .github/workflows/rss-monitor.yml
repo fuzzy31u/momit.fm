@@ -51,6 +51,21 @@ jobs:
           git commit -m "Update RSS hash - new episode detected" || exit 0
           git push
 
+      - name: Extract episode info
+        if: steps.rss-check.outputs.changed == 'true'
+        id: episode-info
+        run: |
+          # Parse the latest episode from RSS
+          EPISODE_TITLE=$(xmllint --xpath "string(//item[1]/title)" current_rss.xml)
+          # Extract episode number from title or use a counter
+          EPISODE_NUMBER=$(echo "$EPISODE_TITLE" | grep -o '#[0-9]*' | sed 's/#//' || echo "latest")
+          
+          echo "Episode title: $EPISODE_TITLE"
+          echo "Episode number: $EPISODE_NUMBER"
+          
+          echo "title=$EPISODE_TITLE" >> $GITHUB_OUTPUT
+          echo "number=$EPISODE_NUMBER" >> $GITHUB_OUTPUT
+
       - name: Trigger Vercel deployment
         if: steps.rss-check.outputs.changed == 'true'
         env:
@@ -58,3 +73,15 @@ jobs:
         run: |
           echo "New episode detected! Triggering Vercel deployment..."
           curl -X POST "$VERCEL_DEPLOY_HOOK"
+
+      - name: Generate announcement text
+        if: steps.rss-check.outputs.changed == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Generating announcement text for new episode..."
+          curl -X POST \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/${{ github.repository }}/dispatches \
+            -d "{\"event_type\":\"new-episode\",\"client_payload\":{\"episode_title\":\"${{ steps.episode-info.outputs.title }}\",\"episode_number\":\"${{ steps.episode-info.outputs.number }}\"}}"

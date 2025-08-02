@@ -1,0 +1,48 @@
+name: Generate Episode Announcement
+
+on:
+  repository_dispatch:
+    types: [new-episode]
+  workflow_dispatch:
+    inputs:
+      episode_title:
+        description: 'Episode title'
+        required: true
+        type: string
+      episode_number:
+        description: 'Episode number'
+        required: true
+        type: string
+
+jobs:
+  generate-announcement:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install Playwright
+        run: |
+          npm install playwright
+          npx playwright install chromium
+
+      - name: Generate announcement text
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          SPOTIFY_SHOW_URL: ${{ secrets.SPOTIFY_SHOW_URL }}
+          APPLE_PODCAST_URL: ${{ secrets.APPLE_PODCAST_URL }}
+        run: |
+          node .github/scripts/generate-announcement.js "${{ github.event.client_payload.episode_title || github.event.inputs.episode_title }}" "${{ github.event.client_payload.episode_number || github.event.inputs.episode_number }}"
+
+      - name: Commit announcement text
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add announcement.txt
+          git commit -m "Generate announcement for episode ${{ github.event.client_payload.episode_number || github.event.inputs.episode_number }}" || exit 0
+          git push
