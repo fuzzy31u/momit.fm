@@ -51,3 +51,8 @@ Episodes contain:
 - RSS parsing is synchronous within async functions
 - Episode numbering is reverse-calculated from array position
 - Audio player uses native HTML5 `<audio>` element
+
+## Code Quality Guidelines
+
+- **Remove dead code**: Proactively identify and remove unused functions, variables, and imports when found
+- **Clean up as you go**: When working on files, remove any obvious dead code or unused declarations

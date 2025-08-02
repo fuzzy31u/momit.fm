@@ -19,72 +19,6 @@ function fetchRSSFeed() {
   });
 }
 
-function callGemini(prompt, content) {
-  return new Promise((resolve, reject) => {
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
-      reject(new Error('GEMINI_API_KEY environment variable is required'));
-      return;
-    }
-
-    // Truncate RSS content to avoid payload size issues and JSON escaping problems
-    const truncatedContent = content.substring(0, 8000);
-    
-    const fullPrompt = `You are a helpful assistant that extracts specific podcast episode links from RSS feed content. Return only the requested URLs in JSON format.
-
-${prompt}
-
-RSS Content (first 8000 chars):
-${truncatedContent}`;
-
-    const data = JSON.stringify({
-      contents: [{
-        parts: [{
-          text: fullPrompt
-        }]
-      }],
-      generationConfig: {
-        temperature: 0,
-        topK: 1,
-        topP: 1,
-        maxOutputTokens: 1024,
-      }
-    });
-
-    const options = {
-      hostname: 'generativelanguage.googleapis.com',
-      port: 443,
-      path: `/v1beta/models/gemini-1.5-pro:generateContent?key=${apiKey}`,
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Content-Length': data.length
-      }
-    };
-
-    const req = https.request(options, (res) => {
-      let responseData = '';
-      res.on('data', (chunk) => responseData += chunk);
-      res.on('end', () => {
-        try {
-          const response = JSON.parse(responseData);
-          // console.log('Gemini response:', JSON.stringify(response, null, 2)); // Comment out for cleaner output
-          if (response.candidates && response.candidates[0] && response.candidates[0].content) {
-            resolve(response.candidates[0].content.parts[0].text);
-          } else {
-            reject(new Error('Invalid Gemini response: ' + JSON.stringify(response)));
-          }
-        } catch (error) {
-          reject(error);
-        }
-      });
-    });
-
-    req.on('error', reject);
-    req.write(data);
-    req.end();
-  });
-}
 
 function fetchWebPage(url) {
   return new Promise((resolve, reject) => {
@@ -143,7 +77,7 @@ async function fetchPageWithPlaywright(url) {
   }
 }
 
-async function extractEpisodeLinksWithLLM(rssContent, episodeTitle, episodeNumber) {
+async function extractEpisodeLinksWithLLM() {
   try {
     console.log('Crawling podcast show pages to find latest episode...');
     
@@ -223,43 +157,6 @@ async function extractEpisodeLinksWithLLM(rssContent, episodeTitle, episodeNumbe
   }
 }
 
-function fallbackExtraction(rssContent, episodeNumber) {
-  // Parse RSS to find the first (latest) episode's Spotify link
-  try {
-    // Find the first <item> block (which should be the latest episode)
-    const firstItemMatch = rssContent.match(/<item>([\s\S]*?)<\/item>/);
-    
-    if (firstItemMatch) {
-      const firstItemContent = firstItemMatch[1];
-      console.log('Latest episode content preview:', firstItemContent.substring(0, 200) + '...');
-      
-      // Look for Spotify link within this episode
-      const spotifyRegex = /https:\/\/open\.spotify\.com\/episode\/[a-zA-Z0-9]+/;
-      const spotifyMatch = firstItemContent.match(spotifyRegex);
-      
-      if (spotifyMatch) {
-        console.log('Found Spotify link in latest episode:', spotifyMatch[0]);
-        return {
-          spotify: spotifyMatch[0],
-          apple: process.env.APPLE_PODCAST_URL || 'https://podcasts.apple.com/jp/podcast/momit-fm/id1589345170'
-        };
-      }
-    }
-    
-    console.log('No Spotify link found in latest episode, using fallback');
-    return {
-      spotify: null,
-      apple: process.env.APPLE_PODCAST_URL || 'https://podcasts.apple.com/jp/podcast/momit-fm/id1589345170'
-    };
-    
-  } catch (error) {
-    console.log('Error parsing RSS for specific episode:', error.message);
-    return {
-      spotify: null,
-      apple: process.env.APPLE_PODCAST_URL || 'https://podcasts.apple.com/jp/podcast/momit-fm/id1589345170'
-    };
-  }
-}
 
 async function generateAnnouncement() {
   try {
@@ -274,9 +171,9 @@ async function generateAnnouncement() {
 
     console.log('Fetching RSS feed to extract episode links...');
     
-    // Fetch RSS feed and use LLM to extract episode-specific links
+    // Fetch RSS feed and extract episode-specific links
     const rssContent = await fetchRSSFeed();
-    const extractedLinks = await extractEpisodeLinksWithLLM(rssContent, episodeTitle, episodeNumber);
+    const extractedLinks = await extractEpisodeLinksWithLLM();
     
     // Use extracted links with fallbacks to show URLs (more reliable)
     const spotifyUrl = extractedLinks.spotify || process.env.SPOTIFY_SHOW_URL || 'https://open.spotify.com/show/5F2ppZb8gxJngLlO6wlIqX';
