@@ -55,6 +55,9 @@ jobs:
         if: steps.rss-check.outputs.changed == 'true'
         id: episode-info
         run: |
+          # Install xmllint for XML parsing
+          sudo apt-get update && sudo apt-get install -y libxml2-utils
+          
           # Parse the latest episode from RSS
           EPISODE_TITLE=$(xmllint --xpath "string(//item[1]/title)" current_rss.xml)
           # Extract episode number from title or use a counter
