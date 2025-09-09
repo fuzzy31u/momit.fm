@@ -61,7 +61,7 @@ jobs:
           # Parse the latest episode from RSS
           EPISODE_TITLE=$(xmllint --xpath "string(//item[1]/title)" current_rss.xml)
           # Extract episode number from title or use a counter
-          EPISODE_NUMBER=$(echo "$EPISODE_TITLE" | grep -o '#[0-9]*' | sed 's/#//' || echo "latest")
+          EPISODE_NUMBER=$(echo "$EPISODE_TITLE" | grep -o '^[0-9]*' || echo "$EPISODE_TITLE" | grep -o '#[0-9]*' | sed 's/#//' || echo "latest")
           
           echo "Episode title: $EPISODE_TITLE"
           echo "Episode number: $EPISODE_NUMBER"
