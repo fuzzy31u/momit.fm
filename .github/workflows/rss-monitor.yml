@@ -1,0 +1,90 @@
+name: RSS Feed Monitor
+
+on:
+  schedule:
+    # Check RSS feed daily at 00:00 UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  check-rss:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check RSS feed for changes
+        id: rss-check
+        run: |
+          # Fetch current RSS feed
+          curl -s "https://rss.art19.com/momitfm" -o current_rss.xml
+          
+          # Generate hash of RSS content
+          RSS_HASH=$(sha256sum current_rss.xml | cut -d' ' -f1)
+          echo "Current RSS hash: $RSS_HASH"
+          
+          # Check if we have a previous hash stored
+          if [ -f .github/rss_hash.txt ]; then
+            PREVIOUS_HASH=$(cat .github/rss_hash.txt)
+            echo "Previous RSS hash: $PREVIOUS_HASH"
+            
+            if [ "$RSS_HASH" != "$PREVIOUS_HASH" ]; then
+              echo "RSS feed has changed!"
+              echo "changed=true" >> $GITHUB_OUTPUT
+              echo "$RSS_HASH" > .github/rss_hash.txt
+            else
+              echo "RSS feed unchanged"
+              echo "changed=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "First run - storing initial hash"
+            echo "$RSS_HASH" > .github/rss_hash.txt
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit updated hash
+        if: steps.rss-check.outputs.changed == 'true'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .github/rss_hash.txt
+          git commit -m "Update RSS hash - new episode detected" || exit 0
+          git push
+
+      - name: Extract episode info
+        if: steps.rss-check.outputs.changed == 'true'
+        id: episode-info
+        run: |
+          # Install xmllint for XML parsing
+          sudo apt-get update && sudo apt-get install -y libxml2-utils
+          
+          # Parse the latest episode from RSS
+          EPISODE_TITLE=$(xmllint --xpath "string(//item[1]/title)" current_rss.xml)
+          # Extract episode number from title or use a counter
+          EPISODE_NUMBER=$(echo "$EPISODE_TITLE" | grep -o '^[0-9]*' || echo "$EPISODE_TITLE" | grep -o '#[0-9]*' | sed 's/#//' || echo "latest")
+          
+          echo "Episode title: $EPISODE_TITLE"
+          echo "Episode number: $EPISODE_NUMBER"
+          
+          echo "title=$EPISODE_TITLE" >> $GITHUB_OUTPUT
+          echo "number=$EPISODE_NUMBER" >> $GITHUB_OUTPUT
+
+      - name: Trigger Vercel deployment
+        if: steps.rss-check.outputs.changed == 'true'
+        env:
+          VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          echo "New episode detected! Triggering Vercel deployment..."
+          curl -X POST "$VERCEL_DEPLOY_HOOK"
+
+      - name: Generate announcement text
+        if: steps.rss-check.outputs.changed == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Generating announcement text for new episode..."
+          curl -X POST \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/${{ github.repository }}/dispatches \
+            -d "{\"event_type\":\"new-episode\",\"client_payload\":{\"episode_title\":\"${{ steps.episode-info.outputs.title }}\",\"episode_number\":\"${{ steps.episode-info.outputs.number }}\"}}"
