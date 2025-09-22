@@ -9,4 +9,15 @@ declare namespace main {
             enclosure: any[]
         }
     }
+
+    interface TranscriptSegment {
+        speaker: string
+        timestamp: string
+        text: string
+    }
+
+    interface Transcript {
+        episodeId: number
+        segments: TranscriptSegment[]
+    }
 }
