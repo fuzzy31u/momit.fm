@@ -13,8 +13,8 @@ function parseTranscriptText(text, episodeId) {
     const trimmed = line.trim();
     if (!trimmed) continue;
 
-    // Match speaker and timestamp pattern: "Speaker Name (00:00.000)"
-    const speakerMatch = trimmed.match(/^(.+?)\s*\((\d{1,2}:\d{2}\.\d{3})\)$/);
+    // Match speaker and timestamp pattern: "Speaker Name (00:00.000)" or "Speaker Name (00:00.00)"
+    const speakerMatch = trimmed.match(/^(.+?)\s*\((\d{1,2}:\d{2}\.\d{2,3})\)$/);
 
     if (speakerMatch) {
       // Save previous segment if exists
@@ -32,7 +32,9 @@ function parseTranscriptText(text, episodeId) {
       currentText = '';
     } else {
       // Continuation of current speaker's text
-      currentText += (currentText ? ' ' : '') + trimmed;
+      // Remove spaces between Japanese characters
+      const cleanedText = trimmed.replace(/\s+/g, '');
+      currentText += (currentText ? '' : '') + cleanedText;
     }
   }
 
