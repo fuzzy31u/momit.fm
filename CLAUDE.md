@@ -8,10 +8,18 @@ This is a Next.js-based podcast website for momit.fm, a Japanese parenting and t
 
 ## Development Commands
 
-- `npm run dev` or `yarn dev` - Start development server on http://localhost:3000
+### Next.js Application
+- `npm run dev` - Start development server on http://localhost:3000
 - `npm run build` - Build the application for production
 - `npm start` - Start production server
 - `npm run lint` - Run ESLint
+
+### ValueCommerce Agent (scripts/valuecommerce-agent/)
+- Ask Claude Code: `"Check <article-url> and create a ValueCommerce MyLinkBox if needed"`
+- Uses Playwright MCP with manual login workflow
+
+### Transcript Conversion
+- `node scripts/convertTranscript.js <episode-number>` - Convert transcript from ~/Downloads/momitfm{N}.txt to public/transcripts/{N}.json
 
 ## Architecture
 
@@ -45,14 +53,75 @@ Episodes contain:
 - FontAwesome icons integrated via React components
 - Custom favicon and PWA assets in `public/`
 
+## Scripts and Automation
+
+### Transcript Processing (scripts/convertTranscript.js)
+Converts raw transcript text files into structured JSON format for episodes.
+
+**Input format**: `~/Downloads/momitfm{N}.txt` with pattern:
+```
+Speaker Name (MM:SS.mmm)
+Transcript text...
+```
+
+**Output format**: `public/transcripts/{N}.json`:
+```json
+{
+  "episodeId": 87,
+  "segments": [
+    {"speaker": "...", "timestamp": "00:MM:SS", "text": "..."}
+  ]
+}
+```
+
+**Processing notes**:
+- Removes spaces between Japanese characters
+- Converts MM:SS.mmm timestamps to HH:MM:SS format
+- Can process single episode or batch (hardcoded list in script)
+
+### ValueCommerce Agent (scripts/valuecommerce-agent/)
+Automates creating ValueCommerce affiliate MyLinkBox links for hub.momit.fm articles via Playwright MCP.
+
+**Usage**: User asks `"Check <article-url> and create a ValueCommerce MyLinkBox if needed"`
+
+**Workflow**:
+1. Check article for existing MyLinkBox widgets
+2. Extract product info from Amazon links
+3. Open ValueCommerce login (manual login)
+4. Guide user through MyLinkBox creation form
+
+**File**: `agent-mcp.js` - Instructions for Claude Code's Playwright MCP workflow
+
+### GitHub Actions Automation
+
+**.github/workflows/rss-monitor.yml**:
+- Runs daily to check RSS feed for new episodes
+- Compares SHA256 hash of RSS feed against stored hash
+- When changed: commits new hash, triggers Vercel deploy, dispatches announcement generation
+
+**.github/workflows/generate-announcement.yml**:
+- Triggered by rss-monitor or manually
+- Uses Playwright to scrape episode details
+- Generates announcement text using Gemini API
+- Commits announcement.txt to repository
+
 ## Development Notes
 
 - The codebase uses a mix of TypeScript strict and non-strict patterns
 - RSS parsing is synchronous within async functions
 - Episode numbering is reverse-calculated from array position
 - Audio player uses native HTML5 `<audio>` element
+- Transcripts are stored as static JSON files in public/transcripts/
+- GitHub Actions handle RSS monitoring and announcement generation automatically
 
 ## Code Quality Guidelines
 
 - **Remove dead code**: Proactively identify and remove unused functions, variables, and imports when found
 - **Clean up as you go**: When working on files, remove any obvious dead code or unused declarations
+
+## Documentation Preferences
+
+- **Avoid creating multiple .md files**: Keep documentation minimal and consolidated
+- **Use existing README.md**: Add new info to existing docs rather than creating new files
+- **No verbose guides**: Keep instructions concise and practical
+- **Delete unnecessary documentation**: If you created multiple instruction files (XX.md), consolidate and remove extras
