@@ -36,3 +36,6 @@ yarn-error.log*
 
 # private
 .private
+
+# claude code local settings
+.claude/settings.local.json
