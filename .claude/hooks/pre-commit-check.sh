@@ -28,6 +28,31 @@ if echo "$PROMPT" | grep -qi -E "(commit|staged|git add)"; then
     STAGED_COUNT=$(git diff --cached --name-only 2>/dev/null | wc -l | tr -d ' ')
 
     if [ "$STAGED_COUNT" -gt 0 ]; then
+        # Check for potential credentials in staged files
+        CREDENTIAL_PATTERNS="(api[_-]?key|secret|password|token|credential|private[_-]?key|access[_-]?token|bearer)"
+        CREDENTIAL_FOUND=""
+
+        # Check staged files for credential patterns
+        if git diff --cached | grep -i -E "$CREDENTIAL_PATTERNS" > /dev/null 2>&1; then
+            CREDENTIAL_FOUND="
+⚠️  WARNING: Potential credentials detected in staged files!
+   Review carefully before committing.
+"
+        fi
+
+        # Check for sensitive file patterns
+        SENSITIVE_FILES=$(git diff --cached --name-only | grep -E "(\\.env|\\.pem|secret|credential|password|private|key\\.)" | head -5)
+        SENSITIVE_WARNING=""
+
+        if [ -n "$SENSITIVE_FILES" ]; then
+            SENSITIVE_WARNING="
+⚠️  WARNING: Sensitive file names detected:
+$(echo "$SENSITIVE_FILES" | sed 's/^/   - /')
+
+   Verify these should be committed or add to .gitignore
+"
+        fi
+
         # Add context reminder to check for minimal codebase
         CONTEXT="
 
@@ -36,7 +61,7 @@ if echo "$PROMPT" | grep -qi -E "(commit|staged|git add)"; then
 - Remove empty files or unused code
 - Remove unused imports/exports
 - Verify all changes are necessary
-
+${CREDENTIAL_FOUND}${SENSITIVE_WARNING}
 Staged files: $STAGED_COUNT
 
 To skip this check, add '--no-verify' to your prompt.

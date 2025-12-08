@@ -28,12 +28,16 @@ Add this to `.claude/settings.json`:
 
 When you ask Claude to commit changes, the hook:
 1. Detects commit-related prompts (contains "commit" or "staged")
-2. Reminds you to check for:
+2. **Security checks**:
+   - Scans for potential credentials (API keys, tokens, passwords, secrets)
+   - Detects sensitive file names (.env, .pem, credentials, etc.)
+   - Warns if sensitive content is about to be committed
+3. **Code quality checks**:
    - Unused dependencies
    - Empty files
    - Unused imports/exports
    - Dead code
-3. Adds context about keeping codebase minimal
+4. Adds context about keeping codebase minimal and secure
 
 ### How to use
 
