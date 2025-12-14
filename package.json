@@ -13,7 +13,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.15",
-    "next": "^15.4.8",
+    "next": "^15.5.9",
     "node-fetch": "^3.2.10",
     "playwright": "^1.55.1",
     "react": "^18.3.1",
@@ -24,7 +24,7 @@
     "@types/react": "^17.0.21",
     "@types/xml2js": "^0.4.9",
     "eslint": "^7.32.0",
-    "eslint-config-next": "^15.4.5",
+    "eslint-config-next": "^15.5.9",
     "typescript": "^5.8.3"
   }
 }
