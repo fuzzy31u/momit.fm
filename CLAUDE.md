@@ -18,6 +18,17 @@ This is a Next.js-based podcast website for momit.fm, a Japanese parenting and t
 - Ask Claude Code: `"Check <article-url> and create a ValueCommerce MyLinkBox if needed"`
 - Uses Playwright MCP with manual login workflow
 
+### Podcast Release Workflow
+- `/release-episode N` - Full guided workflow for releasing an episode
+- `/convert-transcript N` - Convert Riverside transcript to JSON
+- `/generate-titles N` - Generate 10 title candidates
+- `/generate-shownote N` - Generate episode description from transcript
+- `/generate-chapters N` - Generate chapter markers from transcript
+- `/prepare-episode N` - Consolidate all materials for Art19 upload
+- `/generate-announcement N` - Generate SNS announcement text
+- Style guide: `docs/workflow/episode-style-guide.md`
+- Art19 checklist: `docs/workflow/art19-checklist.md`
+
 ### Transcript Conversion
 - `node scripts/convertTranscript.js <episode-number>` - Convert transcript from ~/Downloads/momitfm{N}.txt to public/transcripts/{N}.json
 
