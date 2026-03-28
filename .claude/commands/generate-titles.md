@@ -10,41 +10,56 @@ You are tasked with generating 10 title candidates for a momit.fm podcast episod
 
 ## Steps
 
-1. **Fetch recent episode titles** from the RSS feed:
+1. **Read the style guide** for established title patterns and examples:
    ```bash
-   curl -s https://rss.art19.com/momitfm | grep -A 2 "<title>" | head -30
+   cat docs/workflow/episode-style-guide.md
    ```
 
-2. **Analyze title patterns** from the most recent 3-5 episodes:
-   - Structure: Episode number + 2-4 topics separated by " / "
-   - Sometimes uses "×" to connect related concepts
-   - Mix of casual Japanese phrases and specific product/service names
-   - Balance of life topics, tech topics, and AI/tools
-   - Concise but descriptive
+2. **Fetch recent episode titles** from the RSS feed:
+   ```bash
+   curl -s https://rss.art19.com/momitfm | grep -oP '(?<=<title>).*?(?=</title>)' | head -15
+   ```
 
-3. **Read the transcript or shownote** (if available) to understand the episode content:
-   - Check `~/Downloads/momitfm{episode_number}.txt` for transcript
-   - Or check `~/Downloads/momitfm{episode_number}-shownote.txt` for shownote
+3. **Analyze title patterns** from the style guide and recent episodes:
+   - Structure: `{N}. {Topic1} / {Topic2} / {Topic3}`
+   - Topic separator: ` / ` (half-width space + slash + space)
+   - Related concepts connector: `×` (e.g., `YouTube×創作欲の相性`)
+   - No emojis in titles
+   - Under 120 characters total
+   - Mix of casual Japanese phrases and specific product/service names
+   - Balance of life/parenting topics and tech/AI topics
+   - Expression patterns: 疑問形、「の」で具体化、体験・実践系の語（活用術、体験談、検証、チャレンジ）
+
+4. **Read the transcript or shownote** to understand the episode content:
+   - Check `public/transcripts/$1.json` for transcript JSON
+   - Or check `~/Downloads/momitfm$1.txt` for raw transcript
+   - Or check `~/Downloads/momitfm$1-shownote.txt` for shownote
    - Identify 2-4 main topics discussed
 
-4. **Generate 10 title candidates** following the observed pattern:
-   - Start with episode number (e.g., "89. ")
-   - Use " / " as separator between topics
-   - Keep each title under 100 characters when possible
+5. **Check for topic duplication** against the 5 most recent episode titles:
+   - Avoid repeating the same topic phrasing or keywords from recent episodes
+   - If a topic overlaps (e.g., "Claude Code" appeared recently), find a fresh angle or different framing
+
+6. **Generate 10 title candidates** following the observed pattern:
+   - Start with episode number (e.g., "95. ")
+   - Use ` / ` as separator between topics
+   - Keep each title under 120 characters
    - Vary the phrasing and emphasis across candidates
    - Some can be more casual, others more descriptive
+   - Try at least 1-2 with `×` connector for related concepts
+   - Try at least 1-2 with question-style phrasing
 
-5. **Output format**:
+7. **Output format**:
    ```
    ## Title Candidates for Episode {N}
 
-   1. {episode_number}. {topic1} / {topic2} / {topic3}
-   2. {episode_number}. {topic1} / {topic2} / {topic3}
+   1. {N}. {topic1} / {topic2} / {topic3}
+   2. {N}. {topic1} / {topic2} / {topic3}
    ...
-   10. {episode_number}. {topic1} / {topic2} / {topic3}
+   10. {N}. {topic1} / {topic2} / {topic3}
 
-   **Pattern observations:**
-   - [List key patterns observed]
+   **Recent titles (duplication check):**
+   - [Last 5 episode titles listed]
 
    **Top recommendation:** #{number} - [Reason why]
    ```
