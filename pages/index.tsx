@@ -7,7 +7,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Head from "../components/Head";
 import { formatDate } from "../util";
-import { ReactChild, ReactFragment, ReactPortal } from "react";
+import { ReactNode } from "react";
 
 export async function getStaticProps() {
   const res = await fetch(rssUrl);
@@ -45,7 +45,7 @@ export default function Home(items: main.RSS["item"]) {
           (
             item: {
               [x: string]: any;
-              title: (boolean | ReactChild | ReactFragment | ReactPortal)[];
+              title: ReactNode[];
               pubDate: string;
             },
             index: number
