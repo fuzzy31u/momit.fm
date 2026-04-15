@@ -31,7 +31,7 @@ Vercel preview URLs appear in PR comments or status checks. Look for a deploymen
    - Publication date in `YYYY/MM/DD` format
    - Audio player (`<audio>` element with controls) is present and shows duration
    - Episode description/show notes HTML rendered below the audio player
-   - Transcript toggle button ("文字起こし") visible
+   - Transcript toggle button ("文字起こし") visible **only if a transcript exists** for this episode (not all episodes have transcripts)
    - Header and footer present (same as homepage)
 
 ## Build Verification
@@ -41,7 +41,7 @@ npm install
 npm run build
 ```
 
-The build generates ~98 static pages (homepage + episode pages). All pages should generate without errors.
+The build generates `1 + (number of episodes)` static pages (homepage + one per episode). All pages should generate without errors.
 
 ## Notes
 
