@@ -25,6 +25,6 @@
     "@types/xml2js": "^0.4.14",
     "eslint": "^9.39.4",
     "eslint-config-next": "^16.2.4",
-    "typescript": "^6.0.2"
+    "typescript": "^6.0.3"
   }
 }
