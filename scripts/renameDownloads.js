@@ -22,8 +22,13 @@ function parseArgs(argv) {
       args.autoApprove = true;
     } else if (arg === '--json') {
       args.json = true;
-    } else if (!args.episodeNum) {
-      args.episodeNum = parseInt(arg, 10);
+    } else if (args.episodeNum === null) {
+      const parsed = parseInt(arg, 10);
+      if (!Number.isFinite(parsed)) {
+        console.error('エピソード番号が不正です:', arg);
+        process.exit(1);
+      }
+      args.episodeNum = parsed;
     }
   }
 
@@ -33,16 +38,29 @@ function parseArgs(argv) {
 function fetchNextEpisodeNumber() {
   return new Promise((resolve, reject) => {
     https.get(RSS_URL, (res) => {
+      if (res.statusCode < 200 || res.statusCode >= 300) {
+        res.resume();
+        reject(new Error(`HTTP ${res.statusCode} from ${RSS_URL}`));
+        return;
+      }
       let data = '';
       res.on('data', (chunk) => { data += chunk; });
       res.on('end', () => {
         const parser = new xml2js.Parser();
         parser.parseString(data, (err, result) => {
           if (err) return reject(err);
-          const items = result.rss.channel[0].item;
-          resolve(items.length + 1);
+          try {
+            const items = result?.rss?.channel?.[0]?.item;
+            if (!Array.isArray(items)) {
+              return reject(new Error('RSS response missing channel.item'));
+            }
+            resolve(items.length + 1);
+          } catch (e) {
+            reject(e);
+          }
         });
       });
+      res.on('error', reject);
     }).on('error', reject);
   });
 }
@@ -54,16 +72,15 @@ function findCandidateFiles() {
 
   for (const ext of EXTENSIONS) {
     const matching = allFiles
-      .filter((f) => {
-        if (!f.endsWith(ext)) return false;
-        if (f.startsWith('momitfm')) return false;
+      .reduce((acc, f) => {
+        if (!f.endsWith(ext)) return acc;
+        if (f.startsWith('momitfm')) return acc;
         const stat = fs.statSync(path.join(DOWNLOADS_DIR, f));
-        return stat.isFile() && stat.mtimeMs >= cutoff;
-      })
-      .map((f) => {
-        const stat = fs.statSync(path.join(DOWNLOADS_DIR, f));
-        return { name: f, mtime: stat.mtimeMs };
-      })
+        if (stat.isFile() && stat.mtimeMs >= cutoff) {
+          acc.push({ name: f, mtime: stat.mtimeMs });
+        }
+        return acc;
+      }, [])
       .sort((a, b) => b.mtime - a.mtime);
 
     if (matching.length > 0) {
@@ -88,12 +105,8 @@ async function main() {
   // 1. Determine episode number
   let episodeNum;
   const args = parseArgs(process.argv);
-  if (args.episodeNum) {
+  if (args.episodeNum !== null) {
     episodeNum = args.episodeNum;
-    if (isNaN(episodeNum)) {
-      console.error('エピソード番号が不正です:', process.argv[2]);
-      process.exit(1);
-    }
   } else {
     try {
       episodeNum = await fetchNextEpisodeNumber();
@@ -108,7 +121,11 @@ async function main() {
   // 2. Find candidate files
   const candidates = findCandidateFiles();
   if (candidates.size === 0) {
-    console.log(`~/Downloads に過去 ${RECENCY_DAYS} 日以内の対象ファイル (.txt, .srt, .mp3) が見つかりませんでした。`);
+    if (args.json) {
+      process.stdout.write(JSON.stringify({ episodeNum, renames: [] }, null, 2) + '\n');
+    } else {
+      console.log(`~/Downloads に過去 ${RECENCY_DAYS} 日以内の対象ファイル (.txt, .srt, .mp3) が見つかりませんでした。`);
+    }
     process.exit(0);
   }
 
@@ -118,7 +135,7 @@ async function main() {
     const target = `momitfm${episodeNum}${ext}`;
     const targetPath = path.join(DOWNLOADS_DIR, target);
     if (fs.existsSync(targetPath)) {
-      console.log(`⚠️  スキップ: ${target} は既に存在します`);
+      if (!args.json) console.log(`⚠️  スキップ: ${target} は既に存在します`);
       continue;
     }
     renames.push({
@@ -130,41 +147,44 @@ async function main() {
   }
 
   if (renames.length === 0) {
-    console.log('リネーム対象のファイルがありません。');
+    if (args.json) {
+      process.stdout.write(JSON.stringify({ episodeNum, renames: [] }, null, 2) + '\n');
+    } else {
+      console.log('リネーム対象のファイルがありません。');
+    }
     process.exit(0);
   }
 
   if (args.json) {
-    console.log(JSON.stringify({
-      episodeNum,
-      renames
-    }, null, 2));
+    process.stdout.write(JSON.stringify({ episodeNum, renames }, null, 2) + '\n');
     if (!args.autoApprove) {
       process.exit(0);
     }
+  } else {
+    // 4. Show plan and confirm (human-readable only when not in JSON mode)
+    console.log(`\nEpisode ${episodeNum} のファイルをリネームします:\n`);
+    const maxFromLen = Math.max(...renames.map((r) => r.fromName.length));
+    for (const r of renames) {
+      console.log(`  ${r.fromName.padEnd(maxFromLen)}  ->  ${r.toName}`);
+    }
+    console.log();
   }
-
-  // 4. Show plan and confirm
-  console.log(`\nEpisode ${episodeNum} のファイルをリネームします:\n`);
-  const maxFromLen = Math.max(...renames.map((r) => r.fromName.length));
-  for (const r of renames) {
-    console.log(`  ${r.fromName.padEnd(maxFromLen)}  ->  ${r.toName}`);
-  }
-  console.log();
 
   const confirmed = args.autoApprove ? true : await askConfirmation('実行しますか？ (y/n): ');
   if (!confirmed) {
-    console.log('キャンセルしました。');
+    if (!args.json) console.log('キャンセルしました。');
     process.exit(0);
   }
 
   // 5. Execute renames
   for (const r of renames) {
     fs.renameSync(r.from, r.to);
-    console.log(`✅ ${r.fromName} -> ${r.toName}`);
+    if (!args.json) console.log(`✅ ${r.fromName} -> ${r.toName}`);
   }
 
-  console.log(`\n次のステップ: node scripts/convertTranscript.js ${episodeNum}`);
+  if (!args.json) {
+    console.log(`\n次のステップ: node scripts/convertTranscript.js ${episodeNum}`);
+  }
 }
 
 main().catch(console.error);
