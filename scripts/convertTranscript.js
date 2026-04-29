@@ -1,93 +1,49 @@
 const fs = require('fs');
 const path = require('path');
+const { parseTranscriptText } = require('./transcriptUtils');
 
-function parseTranscriptText(text, episodeId) {
-  const lines = text.split('\n');
-  const segments = [];
+function parseCliArgs(argv) {
+  const args = {
+    episodeNum: null,
+    inputPath: null,
+    outputPath: null
+  };
 
-  let currentSpeaker = '';
-  let currentTimestamp = '';
-  let currentText = '';
-
-  for (const line of lines) {
-    const trimmed = line.trim();
-    if (!trimmed) continue;
-
-    // Match speaker and timestamp pattern: "Speaker Name (00:00.000)" or "Speaker Name (00:00.00)"
-    const speakerMatch = trimmed.match(/^(.+?)\s*\((\d{1,2}:\d{2}\.\d{2,3})\)$/);
-
-    if (speakerMatch) {
-      // Save previous segment if exists
-      if (currentSpeaker && currentText) {
-        segments.push({
-          speaker: currentSpeaker,
-          timestamp: formatTimestamp(currentTimestamp),
-          text: currentText.trim()
-        });
-      }
-
-      // Start new segment
-      currentSpeaker = speakerMatch[1];
-      currentTimestamp = speakerMatch[2];
-      currentText = '';
-    } else {
-      // Continuation of current speaker's text
-      // Remove spaces between Japanese characters
-      const cleanedText = trimmed.replace(/\s+/g, '');
-      currentText += (currentText ? '' : '') + cleanedText;
+  for (let i = 2; i < argv.length; i += 1) {
+    const arg = argv[i];
+    if (arg === '--input') {
+      args.inputPath = argv[i + 1];
+      i += 1;
+    } else if (arg === '--output') {
+      args.outputPath = argv[i + 1];
+      i += 1;
+    } else if (!args.episodeNum) {
+      args.episodeNum = parseInt(arg, 10);
     }
   }
 
-  // Add last segment
-  if (currentSpeaker && currentText) {
-    segments.push({
-      speaker: currentSpeaker,
-      timestamp: formatTimestamp(currentTimestamp),
-      text: currentText.trim()
-    });
-  }
-
-  return {
-    episodeId,
-    segments
-  };
+  return args;
 }
 
-function formatTimestamp(timestamp) {
-  // Convert MM:SS.mmm to HH:MM:SS format
-  const [minSec] = timestamp.split('.');
-  const parts = minSec.split(':');
+const { episodeNum, inputPath, outputPath } = parseCliArgs(process.argv);
 
-  if (parts.length === 2) {
-    const [min, sec] = parts;
-    return `00:${min.padStart(2, '0')}:${sec.padStart(2, '0')}`;
-  } else if (parts.length === 3) {
-    return timestamp; // Already in HH:MM:SS format
-  }
-
-  return timestamp;
-}
-
-// Get episode number from command line argument or process all available
-const episodeArg = process.argv[2];
-
-if (episodeArg) {
+if (episodeNum) {
   // Process single episode
-  const episodeNum = parseInt(episodeArg);
-  const transcriptPath = path.join(process.env.HOME, 'Downloads', `momitfm${episodeNum}.txt`);
-  const outputPath = path.join(process.cwd(), 'public', 'transcripts', `${episodeNum}.json`);
+  const transcriptPath = inputPath || path.join(process.env.HOME, 'Downloads', `momitfm${episodeNum}.txt`);
+  const resolvedOutputPath = outputPath || path.join(process.cwd(), 'public', 'transcripts', `${episodeNum}.json`);
 
   try {
     const text = fs.readFileSync(transcriptPath, 'utf-8');
     const transcript = parseTranscriptText(text, episodeNum);
 
-    fs.writeFileSync(outputPath, JSON.stringify(transcript, null, 2), 'utf-8');
+    fs.writeFileSync(resolvedOutputPath, JSON.stringify(transcript, null, 2), 'utf-8');
     console.log(`✅ Episode ${episodeNum} transcript converted successfully!`);
     console.log(`   Input: ${transcriptPath}`);
-    console.log(`   Output: ${outputPath}`);
+    console.log(`   Output: ${resolvedOutputPath}`);
     console.log(`   Total segments: ${transcript.segments.length}`);
   } catch (error) {
     console.error(`Error converting episode ${episodeNum}:`, error.message);
+    process.exitCode = 1;
   }
 } else {
   // Process all available episodes
@@ -108,6 +64,7 @@ if (episodeArg) {
       }
     } catch (error) {
       console.error(`Error converting episode ${episodeNum}:`, error.message);
+      process.exitCode = 1;
     }
   });
 }
