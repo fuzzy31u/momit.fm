@@ -66,6 +66,11 @@ Episodes contain:
 
 ## Scripts and Automation
 
+### Download Renaming (scripts/renameDownloads.js)
+- `node scripts/renameDownloads.js [episode-number]` - Rename Riverside downloads (txt/srt/mp3) to momitfm{N} convention
+- Auto-detects next episode number from RSS feed if not specified
+- Finds the most recently modified files in ~/Downloads (past 7 days, excludes already-renamed momitfm* files)
+
 ### Transcript Processing (scripts/convertTranscript.js)
 Converts raw transcript text files into structured JSON format for episodes.
 
