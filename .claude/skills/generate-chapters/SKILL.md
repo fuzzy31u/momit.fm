@@ -1,6 +1,6 @@
 ---
-description: Generate chapter markers from transcript
-argument-hint: [episode_number]
+name: generate-chapters
+description: Generate 5-8 chapter markers (HH:MM:SS + Japanese title) from a momit.fm episode transcript for Art19 upload. Use when releasing an episode and need chapter timestamps.
 ---
 
 You are tasked with generating chapter markers for a momit.fm podcast episode.
@@ -12,7 +12,7 @@ You are tasked with generating chapter markers for a momit.fm podcast episode.
 
 1. **Read the style guide** for chapter conventions:
    ```bash
-   cat docs/workflow/episode-style-guide.md
+   cat .claude/skills/_shared/episode-style-guide.md
    ```
 
 2. **Read the transcript**:

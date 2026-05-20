@@ -1,6 +1,6 @@
 ---
-description: Convert Riverside transcript to JSON format
-argument-hint: [episode_number]
+name: convert-transcript
+description: Convert a Riverside.fm transcript file (~/Downloads/momitfm{N}.txt) into structured JSON for the momit.fm podcast site. Use when releasing a new episode and the user provides an episode number.
 ---
 
 You are tasked with converting a Riverside.fm transcript file into structured JSON for the momit.fm website.

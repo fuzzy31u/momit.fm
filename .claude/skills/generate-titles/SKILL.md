@@ -1,6 +1,6 @@
 ---
-description: Generate 10 title candidates for podcast episode
-argument-hint: [episode_number]
+name: generate-titles
+description: Generate 10 title candidates for a momit.fm podcast episode following the established style guide. Use when releasing an episode and need title options that match recent episodes' tone and structure.
 ---
 
 You are tasked with generating 10 title candidates for a momit.fm podcast episode.
@@ -12,7 +12,7 @@ You are tasked with generating 10 title candidates for a momit.fm podcast episod
 
 1. **Read the style guide** for established title patterns and examples:
    ```bash
-   cat docs/workflow/episode-style-guide.md
+   cat .claude/skills/_shared/episode-style-guide.md
    ```
 
 2. **Fetch recent episode titles** from the RSS feed:

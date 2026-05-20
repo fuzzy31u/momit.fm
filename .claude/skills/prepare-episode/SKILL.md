@@ -1,6 +1,6 @@
 ---
-description: Prepare all materials for Art19 upload
-argument-hint: [episode_number]
+name: prepare-episode
+description: Consolidate momit.fm episode materials (title, shownote, chapters, ad points) into a copy-paste-ready Art19 upload bundle. Use after generating titles/shownote/chapters and before manual Art19 upload.
 ---
 
 You are tasked with consolidating all generated materials for uploading a momit.fm episode to Art19.
@@ -11,15 +11,15 @@ You are tasked with consolidating all generated materials for uploading a momit.
 ## Prerequisites
 Before running this skill, the following should already be generated:
 - Transcript: `public/transcripts/$1.json`
-- Title candidates (from `/generate-titles`)
-- Shownote (from `/generate-shownote`)
-- Chapters (from `/generate-chapters`)
+- Title candidates (from the `generate-titles` skill)
+- Shownote (from the `generate-shownote` skill)
+- Chapters (from the `generate-chapters` skill)
 
 ## Steps
 
 1. **Read the Art19 checklist** for reference:
    ```bash
-   cat docs/workflow/art19-checklist.md
+   cat .claude/skills/prepare-episode/references/art19-checklist.md
    ```
 
 2. **Read the transcript** for context:
