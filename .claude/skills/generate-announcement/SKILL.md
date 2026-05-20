@@ -1,6 +1,6 @@
 ---
-description: Generate SNS announcement text for published episode
-argument-hint: [episode_number]
+name: generate-announcement
+description: Generate X/Twitter announcement text for a published momit.fm podcast episode, including Spotify and Apple Podcast episode URLs. Use after Art19 upload and RSS update.
 ---
 
 You are tasked with generating SNS announcement text for a published momit.fm episode.

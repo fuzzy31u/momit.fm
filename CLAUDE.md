@@ -19,15 +19,18 @@ This is a Next.js-based podcast website for momit.fm, a Japanese parenting and t
 - Uses Playwright MCP with manual login workflow
 
 ### Podcast Release Workflow
-- `/release-episode N` - Full guided workflow for releasing an episode
-- `/convert-transcript N` - Convert Riverside transcript to JSON
-- `/generate-titles N` - Generate 10 title candidates
-- `/generate-shownote N` - Generate episode description from transcript
-- `/generate-chapters N` - Generate chapter markers from transcript
-- `/prepare-episode N` - Consolidate all materials for Art19 upload
-- `/generate-announcement N` - Generate SNS announcement text
-- Style guide: `docs/workflow/episode-style-guide.md`
-- Art19 checklist: `docs/workflow/art19-checklist.md`
+Skills under `.claude/skills/` (auto-discovered by Claude Code). Invoke by name with the episode number:
+- `release-episode` — Full guided workflow (orchestrates the skills below + PR flow)
+- `convert-transcript` — Convert Riverside transcript to JSON
+- `generate-titles` — Generate 10 title candidates
+- `generate-shownote` — Generate episode description from transcript
+- `generate-chapters` — Generate chapter markers from transcript
+- `prepare-episode` — Consolidate all materials for Art19 upload
+- `generate-announcement` — Generate SNS announcement text
+
+Shared references bundled inside the skills:
+- `.claude/skills/_shared/episode-style-guide.md` (used by titles/shownote/chapters)
+- `.claude/skills/prepare-episode/references/art19-checklist.md`
 
 ### Transcript Conversion
 - `node scripts/convertTranscript.js <episode-number>` - Convert transcript from ~/Downloads/momitfm{N}.txt to public/transcripts/{N}.json

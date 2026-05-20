@@ -1,6 +1,6 @@
 ---
-description: Generate podcast shownote from transcript file
-argument-hint: [transcript_path_or_episode_number]
+name: generate-shownote
+description: Generate a momit.fm podcast shownote (episode description) in plain text from a Japanese transcript, following the established style guide with topic emojis and ad-insertion suggestions.
 ---
 
 You are tasked with generating a podcast episode shownote (description) from a Japanese transcript.
@@ -16,7 +16,7 @@ You are tasked with generating a podcast episode shownote (description) from a J
 
 First, read the style guide for established patterns and real examples:
 ```bash
-cat docs/workflow/episode-style-guide.md
+cat .claude/skills/_shared/episode-style-guide.md
 ```
 
 ## Output Format Requirements
@@ -63,7 +63,7 @@ momit hub (https://hub.momit.fm/) / YouTube (https://www.youtube.com/@momitfm)
 - **Avoid**: Picking up too much from ice-break / small talk at the beginning. Focus on main topics
 
 ## Steps:
-1. Read the style guide from `docs/workflow/episode-style-guide.md`
+1. Read the style guide from `.claude/skills/_shared/episode-style-guide.md`
 2. Read the transcript from $1
 3. Identify main discussion topics (skip ice-break, focus on substantive content)
 4. Understand the overall theme and context

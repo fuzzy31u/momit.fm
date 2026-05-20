@@ -71,7 +71,7 @@ format_line "$srt"
 format_line "$mp3"
 echo
 if [ -n "$ep_num" ]; then
-  echo "To release this episode, run: /release-episode ${ep_num}"
+  echo "To release this episode, ask Claude: \"release momit.fm episode ${ep_num}\""
 else
-  echo "To release this episode, run: /release-episode <N>  (RSS lookup failed; verify episode number)"
+  echo "To release this episode, ask Claude: \"release momit.fm episode <N>\"  (RSS lookup failed; verify episode number)"
 fi

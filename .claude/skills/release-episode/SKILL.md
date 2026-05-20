@@ -1,6 +1,6 @@
 ---
-description: Orchestrate the full episode release workflow
-argument-hint: [episode_number]
+name: release-episode
+description: Orchestrate the full momit.fm podcast episode release workflow — transcript conversion, title/shownote/chapter generation, Art19 upload bundle, post-publication announcement, and PR-based commit. Use when releasing a new episode end-to-end.
 ---
 
 You are the orchestrator for releasing a new momit.fm podcast episode. Guide the user through each step, pausing for confirmation before proceeding.
@@ -22,7 +22,7 @@ If not found, ask the user to export the transcript from Riverside.fm and save i
 ### Step 1: Transcript Conversion
 Convert the Riverside transcript to structured JSON.
 
-Run: `/convert-transcript $1`
+Invoke the `convert-transcript` skill with episode number $1.
 
 Confirm the output looks correct before proceeding.
 
@@ -31,7 +31,7 @@ Confirm the output looks correct before proceeding.
 ### Step 2: Title Generation
 Generate 10 title candidates for the episode.
 
-Run: `/generate-titles $1`
+Invoke the `generate-titles` skill with episode number $1.
 
 Ask the user to pick their preferred title (or suggest modifications).
 
@@ -40,7 +40,7 @@ Ask the user to pick their preferred title (or suggest modifications).
 ### Step 3: Shownote Generation
 Generate the episode description/shownote.
 
-Run: `/generate-shownote $1`
+Invoke the `generate-shownote` skill with episode number $1.
 
 Present the shownote for user review. Apply any requested edits.
 
@@ -49,7 +49,7 @@ Present the shownote for user review. Apply any requested edits.
 ### Step 4: Chapter Generation
 Generate chapter markers from the transcript.
 
-Run: `/generate-chapters $1`
+Invoke the `generate-chapters` skill with episode number $1.
 
 Present chapters for user review.
 
@@ -58,7 +58,7 @@ Present chapters for user review.
 ### Step 5: Art19 Upload Bundle
 Consolidate all materials for Art19 upload.
 
-Run: `/prepare-episode $1`
+Invoke the `prepare-episode` skill with episode number $1.
 
 This outputs all materials in copy-paste-ready format.
 
@@ -87,7 +87,7 @@ Art19 にアップロードしてください:
 After the user confirms Art19 publication:
 
 1. Generate the announcement text:
-   Run: `/generate-announcement $1`
+   Invoke the `generate-announcement` skill with episode number $1.
 
 2. Create a feature branch and commit on it (never directly to `main` — direct push is blocked by guardrails):
    ```bash
