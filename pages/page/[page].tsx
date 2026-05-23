@@ -35,16 +35,6 @@ export async function getStaticProps({ params }) {
   const episodes = await fetchEpisodes();
   const totalPages = getTotalPages(episodes.length);
 
-  if (
-    !Number.isInteger(currentPage) ||
-    currentPage < 2 ||
-    currentPage > totalPages
-  ) {
-    return {
-      notFound: true,
-    };
-  }
-
   return {
     props: {
       episodes: getEpisodeSummariesForPage(episodes, currentPage),

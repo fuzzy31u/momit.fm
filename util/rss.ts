@@ -25,7 +25,9 @@ type ParsedRss = {
   };
 };
 
-export async function fetchEpisodes(): Promise<Episode[]> {
+let episodesCache: Promise<Episode[]> | null = null;
+
+async function fetchEpisodesFromRss(): Promise<Episode[]> {
   const res = await fetch(rssUrl);
 
   if (!res.ok) {
@@ -43,14 +45,22 @@ export async function fetchEpisodes(): Promise<Episode[]> {
   }));
 }
 
+export async function fetchEpisodes(): Promise<Episode[]> {
+  if (!episodesCache) {
+    episodesCache = fetchEpisodesFromRss().catch((error) => {
+      episodesCache = null;
+      throw error;
+    });
+  }
+
+  return episodesCache;
+}
+
 export function getTotalPages(episodeCount: number): number {
   return Math.max(1, Math.ceil(episodeCount / EPISODES_PER_PAGE));
 }
 
-export function getEpisodesForPage(
-  episodes: Episode[],
-  page: number
-): Episode[] {
+function getEpisodesForPage(episodes: Episode[], page: number): Episode[] {
   const start = (page - 1) * EPISODES_PER_PAGE;
   return episodes.slice(start, start + EPISODES_PER_PAGE);
 }
