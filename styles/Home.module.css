@@ -59,6 +59,32 @@
   margin-top: 0;
 }
 
+.pagination {
+  align-items: center;
+  border-top: 1px solid #eaeaea;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+  padding-top: 2rem;
+}
+
+.pagination_link {
+  border: 1px solid #635f5a;
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  text-decoration: none;
+}
+
+.main .pagination_link {
+  text-decoration: none;
+}
+
+.pagination_status {
+  color: #635f5a;
+}
+
 .main_audio {
   width: 100%;
 }

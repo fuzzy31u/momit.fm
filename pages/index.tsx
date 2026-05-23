@@ -1,69 +1,41 @@
-import Image from "next/image";
-import Link from "next/link";
-import styles from "../styles/Home.module.css";
-import xml2js from "xml2js";
-import { rssUrl, siteDescription } from "../const";
+import { siteDescription } from "../const";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Head from "../components/Head";
-import { formatDate } from "../util";
-import { ReactNode } from "react";
+import EpisodeArchive from "../components/EpisodeArchive";
+import {
+  fetchEpisodes,
+  getEpisodeSummariesForPage,
+  getTotalPages,
+  type EpisodeSummary,
+} from "../util/rss";
+
+type HomeProps = {
+  episodes: EpisodeSummary[];
+  totalPages: number;
+};
 
 export async function getStaticProps() {
-  const res = await fetch(rssUrl);
-  const text = await res.text();
-  let parser = new xml2js.Parser();
+  const episodes = await fetchEpisodes();
 
-  let item = [];
-  parser.parseString(
-    text,
-    (err: any, r: { rss: { channel: { item: any[] }[] } }) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      item = r.rss.channel[0].item;
-    }
-  );
   return {
     props: {
-      item,
+      episodes: getEpisodeSummariesForPage(episodes, 1),
+      totalPages: getTotalPages(episodes.length),
     },
   };
 }
 
-export default function Home(items: main.RSS["item"]) {
-  const episodes = items["item"];
-  let id = episodes.length + 1;
-
+export default function Home({ episodes, totalPages }: HomeProps) {
   return (
-    <div className={styles.container}>
+    <div>
       <Head title="momit.fm" description={siteDescription}></Head>
       <Header></Header>
-      <div className={styles.main}>
-        {episodes.map(
-          (
-            item: {
-              [x: string]: any;
-              title: ReactNode[];
-              pubDate: string;
-            },
-            index: number
-          ) => {
-            id = id - 1;
-
-            return (
-              <article key={`ep-${id}`}>
-                <h2 className={styles.main_title}>
-                  <Link href={`/episode/${id}`}>{item.title[0]}</Link>
-                </h2>
-                <p className={styles.main_date}>{formatDate(item.pubDate)}</p>
-                {/* <div className={styles.main_description} dangerouslySetInnerHTML={{ __html: item["description"][0] }}></div> */}
-              </article>
-            );
-          }
-        )}
-      </div>
+      <EpisodeArchive
+        episodes={episodes}
+        currentPage={1}
+        totalPages={totalPages}
+      />
       <Footer></Footer>
     </div>
   );
