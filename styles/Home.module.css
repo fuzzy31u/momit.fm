@@ -60,29 +60,123 @@
 }
 
 .pagination {
-  align-items: center;
   border-top: 1px solid #eaeaea;
-  display: flex;
-  flex-wrap: wrap;
+  color: #2f3437;
+  display: grid;
   gap: 1rem;
-  justify-content: center;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   padding-top: 2rem;
 }
 
-.pagination_link {
-  border: 1px solid #635f5a;
-  border-radius: 4px;
-  padding: 0.5rem 0.75rem;
-  text-decoration: none;
+.pagination_header {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  justify-content: space-between;
 }
 
-.main .pagination_link {
-  text-decoration: none;
+.pagination_title {
+  font-size: 1.1rem;
+  margin: 0;
 }
 
 .pagination_status {
   color: #635f5a;
+  margin: 0;
+}
+
+.pagination_controls {
+  align-items: center;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+}
+
+.pagination_button {
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #635f5a;
+  border-radius: 4px;
+  color: #2f3437;
+  display: inline-flex;
+  gap: 0.5rem;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.6rem 0.85rem;
+  text-decoration: none;
+}
+
+.main .pagination_button,
+.main .pagination_page,
+.main .pagination_latest {
+  text-decoration: none;
+}
+
+.pagination_button:hover,
+.pagination_page:hover,
+.pagination_latest:hover {
+  background-color: #f4f4f0;
+}
+
+.pagination_button_disabled {
+  background-color: transparent;
+  border-color: #d4d1ca;
+  color: #8f8b86;
+  cursor: default;
+}
+
+.pagination_button_disabled:hover {
+  background-color: transparent;
+}
+
+.pagination_button_page {
+  color: #635f5a;
+  font-size: 0.85rem;
+}
+
+.pagination_pages {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  justify-content: center;
+}
+
+.pagination_page_group {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.35rem;
+}
+
+.pagination_page {
+  align-items: center;
+  background-color: #fff;
+  border: 1px solid #d4d1ca;
+  border-radius: 4px;
+  color: #2f3437;
+  display: inline-flex;
+  height: 40px;
+  justify-content: center;
+  min-width: 40px;
+  padding: 0 0.6rem;
+}
+
+.pagination_page_current {
+  background-color: #2f3437;
+  border-color: #2f3437;
+  color: white;
+}
+
+.pagination_ellipsis {
+  color: #635f5a;
+  padding: 0 0.2rem;
+}
+
+.pagination_latest {
+  color: #635f5a;
+  justify-self: center;
+  padding: 0.35rem 0.5rem;
 }
 
 .main_audio {
@@ -149,6 +243,12 @@
 @media (max-width: 600px) {
   .main {
     margin: 1rem 2rem;
+  }
+  .pagination_controls {
+    grid-template-columns: 1fr;
+  }
+  .pagination_button {
+    width: 100%;
   }
   .footer_inner {
     flex-direction: column;
