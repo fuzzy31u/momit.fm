@@ -1,31 +1,20 @@
-import xml2js from "xml2js";
 import { useRef } from "react";
 import Footer from "../../components/Footer";
 import Head from "../../components/Head";
 import Header from "../../components/Header";
 import Transcript from "../../components/Transcript";
-import { rssUrl } from "../../const";
-import styles from '../../styles/Home.module.css'
+import styles from "../../styles/Home.module.css";
 import { formatDate } from "../../util";
+import { fetchEpisodes, getEpisodeById } from "../../util/rss";
 import fs from "fs";
 import path from "path";
 
 export async function getStaticPaths() {
-    const res = await fetch(rssUrl);
-    const text = await res.text()
-    let parser = new xml2js.Parser();
-    let item = [];
-    parser.parseString(text, (err: any, r: { rss: { channel: { item: any[]; }[]; }; }) => {
-        if (err) {
-            console.error(err);
-            return;
-        }
-        item = r.rss.channel[0].item;
-    })
-
-    let paths: main.RSS["paths"] = item.map((e, i: number) => {
-        return { params: { id: (i + 1).toString() } }
+    const episodes = await fetchEpisodes();
+    const paths = episodes.map((episode) => {
+        return { params: { id: episode.id.toString() } }
     });
+
     return {
         paths,
         fallback: false
@@ -33,9 +22,15 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-    const items: main.RSS["item"][] = await fetchRSS()
-    const id: number = params["id"]
-    const item: main.RSS["item"] = items.reverse()[id - 1]
+    const episodes = await fetchEpisodes();
+    const id = Number(params["id"]);
+    const item = getEpisodeById(episodes, id);
+
+    if (!item) {
+        return {
+            notFound: true
+        };
+    }
 
     // Try to load transcript if it exists
     let transcript: main.Transcript | null = null;
@@ -55,21 +50,6 @@ export async function getStaticProps({ params }) {
             transcript
         }
     };
-}
-
-async function fetchRSS() {
-    const res = await fetch(rssUrl);
-    const text = await res.text()
-    let parser = new xml2js.Parser();
-    let item
-    parser.parseString(text, (err, r) => {
-        if (err) {
-            console.error(err);
-            return;
-        }
-        item = r.rss.channel[0].item;
-    })
-    return item;
 }
 
 export default function Episode({ item, transcript }) {
