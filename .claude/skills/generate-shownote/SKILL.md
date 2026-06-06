@@ -42,12 +42,35 @@ Generate a plain text description following momit.fm's established style.
 
 …………………………………………………………………
 
-フィードバックは #momitfm (https://twitter.com/search?q=%23momitfm) もしくは おたよりフォーム (https://note.com/kamiyuuu/n/n5cb3cd154259) より募集しています。
+✨＼ momit hub更新しました /／ ✨
 
-Yu Kamiya (https://twitter.com/kamiyuuu) / miho (https://twitter.com/miholovesq)
+[【最新の hub.momit.fm 記事タイトル】](記事 URL)
 
-momit hub (https://hub.momit.fm/) / YouTube (https://www.youtube.com/@momitfm)
+
+…………………………………………………………………
+
+✨ 📩 フィードバック募集中！
+
+ハッシュタグ [#momitfm](https://x.com/search?q=momitfm) もしくは [お便りフォーム](https://docs.google.com/forms/d/e/1FAIpQLSfwtvdBRjwhWyI4wvpX42knaLbQ3Ac05XVwd0mr4GFvYmT1wg/viewform) でのご意見ご感想お待ちしています！📩
+💛 番組のフォローと⭐評価もお願いいたします！
+
+
+…………………………………………………………………
+
+✨🎧 Credits
+
+🎙️This Show Hosted by [@_yukamiya](https://x.com/_yukamiya) & [@m2vela](https://x.com/m2vela)
+
+🎶 Intro Crafted by [@kirillovlov2983](https://www.youtube.com/@kirillovlov2983)
 ```
+
+> **momit hub ブロック**: その回に紹介する最新記事がある場合のみ含める。記事がなければこのブロック（区切り線 + 「momit hub更新しました」 + 記事タイトル）を省略し、フィードバック募集ブロックから始める。
+>
+> **リンクはハイパーリンク（HTML アンカー）で**: Art19 の Description は HTML リッチテキスト。生 URL や `テキスト (URL)` ではなく、表示テキストにハイパーリンクを設定する（記事は**タイトル文字列自体**にリンクを貼り、別行の生 URL は置かない）。上記の `[テキスト](URL)` は貼り付け先のリンク対象を示す表記。固定リンク先:
+> - `#momitfm` → `https://x.com/search?q=momitfm`
+> - `お便りフォーム` → `https://docs.google.com/forms/d/e/1FAIpQLSfwtvdBRjwhWyI4wvpX42knaLbQ3Ac05XVwd0mr4GFvYmT1wg/viewform`
+> - `@_yukamiya` → `https://x.com/_yukamiya` / `@m2vela` → `https://x.com/m2vela`
+> - `@kirillovlov2983` → `https://www.youtube.com/@kirillovlov2983`
 
 ### Style Guidelines:
 - **Format**: Plain text without HTML tags for easy copy-paste
@@ -57,7 +80,7 @@ momit hub (https://hub.momit.fm/) / YouTube (https://www.youtube.com/@momitfm)
 - **Topic titles**: Bold with `**` markers. Concise and catchy
 - **Descriptions**: Concise explanations using em dash (–) separator. 1 文で簡潔に
 - **Topic count**: Main themes 3-5 + sub-topics as needed (total 5-12)
-- **Links**: Include URLs in parentheses after link text, e.g., `Link Text (URL)`
+- **Links**: Art19 Description は HTML。表示テキストにハイパーリンク（アンカー）を設定する。生 URL や `Link Text (URL)` は使わない。記事はタイトル文字列自体にリンクを貼る
 - **Separator**: Use `…………………………………………………………………` (full-width ellipsis × 15)
 - **Blank lines**: Use single blank lines between sections for readability
 - **Avoid**: Picking up too much from ice-break / small talk at the beginning. Focus on main topics

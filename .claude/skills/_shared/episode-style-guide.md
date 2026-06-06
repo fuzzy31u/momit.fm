@@ -56,11 +56,26 @@
 
 …………………………………………………………………
 
-フィードバックは #momitfm (https://twitter.com/search?q=%23momitfm) もしくは おたよりフォーム (https://note.com/kamiyuuu/n/n5cb3cd154259) より募集しています。
+✨＼ momit hub更新しました /／ ✨
 
-Yu Kamiya (https://twitter.com/kamiyuuu) / miho (https://twitter.com/miholovesq)
+[【最新の hub.momit.fm 記事タイトル】](記事 URL)
 
-momit hub (https://hub.momit.fm/) / YouTube (https://www.youtube.com/@momitfm)
+
+…………………………………………………………………
+
+✨ 📩 フィードバック募集中！
+
+ハッシュタグ [#momitfm](https://x.com/search?q=momitfm) もしくは [お便りフォーム](https://docs.google.com/forms/d/e/1FAIpQLSfwtvdBRjwhWyI4wvpX42knaLbQ3Ac05XVwd0mr4GFvYmT1wg/viewform) でのご意見ご感想お待ちしています！📩
+💛 番組のフォローと⭐評価もお願いいたします！
+
+
+…………………………………………………………………
+
+✨🎧 Credits
+
+🎙️This Show Hosted by [@_yukamiya](https://x.com/_yukamiya) & [@m2vela](https://x.com/m2vela)
+
+🎶 Intro Crafted by [@kirillovlov2983](https://www.youtube.com/@kirillovlov2983)
 ```
 
 ### ルール
@@ -70,8 +85,10 @@ momit hub (https://hub.momit.fm/) / YouTube (https://www.youtube.com/@momitfm)
 - **絵文字の選択**: 内容に合った絵文字を使う（技術: 🤖🔧🧰💻、子育て: 📝✈️🎮、概念: 🧠📏🌐）
 - **説明文**: 1 文で簡潔に。会話的なトーンで内容のエッセンスを伝える
 - **区切り線**: `…………………………………………………………………`（全角三点リーダー × 15）
-- **フォーマット**: Plain text（HTML タグなし）。コピペしやすさ重視
-- **リンク形式**: `テキスト (URL)` のインライン形式
+- **フォーマット**: 本文は会話調のテキスト。Art19 の Description は HTML リッチテキストなので、リンクは生 URL や `テキスト (URL)` ではなく表示テキストにハイパーリンク（アンカー）を設定する
+- **リンク先（固定）**: `#momitfm`→`https://x.com/search?q=momitfm`、`お便りフォーム`→`https://docs.google.com/forms/d/e/1FAIpQLSfwtvdBRjwhWyI4wvpX42knaLbQ3Ac05XVwd0mr4GFvYmT1wg/viewform`、`@_yukamiya`→`https://x.com/_yukamiya`、`@m2vela`→`https://x.com/m2vela`、`@kirillovlov2983`→`https://www.youtube.com/@kirillovlov2983`。記事はタイトル文字列自体にリンクを貼る
+- **フッター**: 3 ブロック構成（① momit hub更新 ② フィードバック募集中 ③ Credits）を区切り線で区切る。`Credits` の `@_yukamiya & @m2vela`、`@kirillovlov2983` は固定
+- **momit hub ブロック**: その回に紹介する最新記事がある場合のみ含める。なければブロックごと省略し、フィードバック募集ブロックから始める
 
 ### 実例: Episode 85
 
