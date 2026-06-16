@@ -16,7 +16,7 @@
     "@fortawesome/react-fontawesome": "^3.3.1",
     "next": "^16.2.9",
     "node-fetch": "^3.3.2",
-    "playwright": "^1.60.0",
+    "playwright": "^1.61.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "xml2js": "^0.6.2"
