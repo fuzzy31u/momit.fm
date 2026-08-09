@@ -64,8 +64,12 @@ This outputs all materials in copy-paste-ready format.
 
 ---
 
-### Step 6: Art19 Upload (Manual)
-Remind the user:
+### Step 6: Art19 Upload (Automated via Browser)
+Invoke the `upload-art19` skill with episode number $1.
+
+It automates: New Episode 作成、タイトル・Description 入力、Mid-Roll 広告ポイント設定、ドラフト保存。音源アップロードとログインのみ手動（スキル内で案内される）。
+
+Fallback（ブラウザ自動化が使えない場合）— manual steps:
 ```
 Art19 にアップロードしてください:
 1. Art19 ダッシュボード → New Episode
