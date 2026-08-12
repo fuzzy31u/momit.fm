@@ -39,3 +39,8 @@ yarn-error.log*
 
 # claude code local settings
 .claude/settings.local.json
+
+# local-only workspaces and tool output
+.playwright-mcp/
+/articles/
+/book/
