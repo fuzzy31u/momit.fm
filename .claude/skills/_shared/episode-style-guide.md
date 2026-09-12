@@ -140,3 +140,51 @@
 - アイスブレイク → メイントピック移行の間（前半）
 - メイントピック間の転換点（中盤）
 - 2-3 箇所が目安
+
+---
+
+## アフィリエイトリンク（Amazon アソシエイト）
+
+エピソード中で**具体的な商品**（書籍・漫画・ガジェット・サービス）が紹介されたら、該当トピック行にアフィリエイトリンクを貼る。雑談レベルの言及には貼らない。
+
+### 発行の規約は hub 側が正
+
+リンク生成のルールは `../hub.momit.fm/.claude/skills/affiliate-orchestrator/` が単一の真実。実装をそのまま呼ぶ（自分で URL を組み立てない）:
+
+```bash
+cd ../hub.momit.fm && python3 -c "
+import sys; sys.path.insert(0,'.')
+from affiliate import amazon_links as A
+print(A.build_search_url('検索キーワード'))   # https://www.amazon.co.jp/s?k=...&tag=momithub-22
+print(A.build_product_url('4023318035'))      # https://www.amazon.co.jp/dp/ASIN?tag=momithub-22
+"
+```
+
+- トラッキング ID は `momithub-22`
+- **検索リンクを既定にする。** 多巻シリーズ（漫画・学習まんが等）は特定の1巻を指す必然性がない
+- ASIN 直リンクは、単巻の書籍やガジェットで **ASIN を実際に確認できた場合のみ**。推測で ASIN を書かない
+- hub の manifest（`affiliate/manifests/*.json`）は WordPress 記事用。Art19 の番組概要では作らない
+
+### 表記ルール（景表法・ステマ規制 — 必須）
+
+- リンクテキスト末尾に `（PR）` を付ける（リンク近接での明示）
+- トピック一覧の直下に 1 回だけ全体表記を置く:
+  `※この番組概要には Amazon アソシエイト・プログラムによる広告（PR）が含まれます。`
+- 重複して置かない
+
+### 作品名・商品名は必ず裏取りする
+
+文字起こしは Riverside の日本語 ASR なので固有名詞が崩れる。リンクのキーワードにする前に実在の正式名称を確認する。実例（ep101）:
+
+- 「理科だマン」→ 正しくは **「つかめ！理科ダマン」**（マガジンハウス）
+- 「サバイバルシリーズ」→ 正しくは **「科学漫画サバイバルシリーズ」**（朝日新聞出版）
+
+名前が違うと検索リンクが空振りするため、ここを外すとリンクごと無意味になる。
+
+### HTML での書き方
+
+Art19 の Description はリッチテキスト。トピックの見出し部分をアンカーにする（既存の hub 記事リンクと同じ形）:
+
+```html
+<p>🧪 <a href="https://www.amazon.co.jp/s?k=...&tag=momithub-22" rel="noopener noreferrer" target="_blank"><strong>Dr.STONE は圧倒的1位（PR）</strong></a> – 説明文</p>
+```

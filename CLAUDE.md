@@ -21,10 +21,11 @@ This is a Next.js-based podcast website for momit.fm, a Japanese parenting and t
 ### Podcast Release Workflow
 Skills under `.claude/skills/` (auto-discovered by Claude Code). Invoke by name with the episode number:
 - `release-episode` — Full guided workflow (orchestrates the skills below + PR flow)
+- `edit-riverside` — Edit the recording in Riverside via MCP (Magic Audio, pause removal, 「なんか」「あの」 cuts, intro/outro overlay) and export
 - `convert-transcript` — Convert Riverside transcript to JSON
 - `generate-titles` — Generate 10 title candidates
 - `generate-shownote` — Generate episode description from transcript
-- `generate-chapters` — Generate chapter markers from transcript
+- `generate-chapters` — Generate a timestamped topic outline from the transcript (internal aid; Art19 has no chapter field)
 - `prepare-episode` — Consolidate all materials for Art19 upload
 - `generate-announcement` — Generate SNS announcement text
 

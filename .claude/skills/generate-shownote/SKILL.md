@@ -81,6 +81,7 @@ Generate a plain text description following momit.fm's established style.
 - **Descriptions**: Concise explanations using em dash (–) separator. 1 文で簡潔に
 - **Topic count**: Main themes 3-5 + sub-topics as needed (total 5-12)
 - **Links**: Art19 Description は HTML。表示テキストにハイパーリンク（アンカー）を設定する。生 URL や `Link Text (URL)` は使わない。記事はタイトル文字列自体にリンクを貼る
+- **Affiliate**: 商品が紹介されたら Amazon アソシエイトリンクを貼り、リンクテキスト末尾に `（PR）`、トピック一覧直下に PR 表記を 1 回だけ置く（スタイルガイドの「アフィリエイトリンク」節が規約）
 - **Separator**: Use `…………………………………………………………………` (full-width ellipsis × 15)
 - **Blank lines**: Use single blank lines between sections for readability
 - **Avoid**: Picking up too much from ice-break / small talk at the beginning. Focus on main topics
@@ -90,8 +91,11 @@ Generate a plain text description following momit.fm's established style.
 2. Read the transcript from $1
 3. Identify main discussion topics (skip ice-break, focus on substantive content)
 4. Understand the overall theme and context
-5. Generate plain text description matching the established style
-6. Output the shownote
+5. **Spot the concrete products** — books, manga, gadgets, services the hosts actually recommended (not passing mentions). For each, verify the real product name before doing anything else: the Riverside Japanese ASR mangles proper nouns, and a wrong keyword makes the link useless. Then generate affiliate links per the style guide's アフィリエイトリンク section (call `../hub.momit.fm`'s `affiliate.amazon_links` — never hand-build a URL, never invent an ASIN).
+6. Generate plain text description matching the established style, linking each product's topic heading and appending `（PR）` to that link text
+7. If any affiliate link was added, place the disclosure line once, directly under the topic list:
+   `※この番組概要には Amazon アソシエイト・プログラムによる広告（PR）が含まれます。`
+8. Output the shownote, and list the affiliate links separately so the user can check the keywords
 
 ## Ad Insertion Points (Bonus)
 
