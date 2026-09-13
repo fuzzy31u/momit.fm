@@ -149,8 +149,8 @@
 
 **規約と手順は `affiliate-links` スキルが単一の真実。** 発行前にそちらを読むこと。要点だけ:
 
-- トラッキング ID は **`momitfm-site-22`**（hub.momit.fm の `momithub-22` とは別物。取り違えると収益が別プロパティに入る）
+- トラッキング ID は **`momitfm-site-22`**
 - URL は `node scripts/affiliateLink.js search "キーワード" "表示テキスト"` で生成する。手で組み立てない
 - 検索リンクが既定。ASIN 直リンクは実際に確認できた場合のみ（推測で書かない）
 - ASR が固有名詞を崩すので、リンクのキーワードにする前に正式名称を裏取りする
-- 番組概要にはリンクテキスト末尾の `（PR）` のみ。長文の全体表記は書かない（Amazon 指定文言は `components/Footer.tsx` に常設）
+- 番組概要に PR 表記は入れない。Amazon 指定文言は `components/Footer.tsx` に常設

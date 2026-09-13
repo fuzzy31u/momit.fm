@@ -4,8 +4,7 @@
  * PA-API 5.0 は廃止済み、後継の Creators API は審査制のため、
  * 手動指定の ASIN / 検索キーワードからタグ付き URL を組み立てる。
  *
- * トラッキング ID は momit.fm 専用の `momitfm-site-22`。
- * hub.momit.fm は別 ID (`momithub-22`) を使うので取り違えないこと。
+ * トラッキング ID: `momitfm-site-22`
  */
 
 const TRACKING_ID = 'momitfm-site-22';
@@ -34,10 +33,18 @@ function buildSearchUrl(query, tag = TRACKING_ID) {
   return `${AMAZON_BASE}/s?k=${encoded}&tag=${tag}`;
 }
 
-/** 番組概要に貼るアンカー HTML を組み立てる。表示テキストには必ず（PR）を付ける。 */
+/** HTML の文字参照エスケープ。商品名に & や < が入っていてもマークアップを壊さない。 */
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+/** 番組概要に貼るアンカー HTML を組み立てる。 */
 function buildAnchorHtml(url, label) {
-  const text = label.endsWith('（PR）') ? label : `${label}（PR）`;
-  return `<a href="${url}" rel="noopener noreferrer" target="_blank"><strong>${text}</strong></a>`;
+  return `<a href="${escapeHtml(url)}" rel="noopener noreferrer" target="_blank"><strong>${escapeHtml(label)}</strong></a>`;
 }
 
 function usage() {
@@ -84,6 +91,7 @@ if (require.main === module) {
 module.exports = {
   TRACKING_ID,
   AMAZON_BASE,
+  escapeHtml,
   buildProductUrl,
   buildSearchUrl,
   buildAnchorHtml,

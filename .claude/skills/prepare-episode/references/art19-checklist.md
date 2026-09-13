@@ -12,7 +12,7 @@ Art19 にエピソードを手動アップロードする際の入力フィー�
 | タイトル | `/generate-titles` で候補生成 → 選択 | Plain text |
 | 説明文（Shownote） | `/generate-shownote` で生成 | Plain text |
 | 広告挿入ポイント | Shownote 生成時にサジェスト（既定は音源の中点） | タイムスタンプ |
-| アフィリエイトリンク | `/generate-shownote` が商品を検出 → `affiliate-links` スキルが発行 | `tag=momitfm-site-22` 付き URL + リンクテキスト末尾の `（PR）`。長文の全体表記はサイトのフッター側 |
+| アフィリエイトリンク | `/generate-shownote` が商品を検出 → `affiliate-links` スキルが発行 | `tag=momitfm-site-22` 付き URL。PR 表記はサイトのフッター側 |
 
 ## Art19 入力フィールド
 

@@ -28,7 +28,7 @@ Skills under `.claude/skills/` (auto-discovered by Claude Code). Invoke by name 
 - `generate-chapters` — Generate a timestamped topic outline from the transcript (internal aid; Art19 has no chapter field)
 - `prepare-episode` — Consolidate all materials for Art19 upload
 - `generate-announcement` — Generate SNS announcement text
-- `affiliate-links` — Issue Amazon アソシエイト links (`momitfm-site-22`) with the （PR）disclosure
+- `affiliate-links` — Issue Amazon アソシエイト links (`momitfm-site-22`)
 
 Shared references bundled inside the skills:
 - `.claude/skills/_shared/episode-style-guide.md` (used by titles/shownote/chapters)
@@ -79,8 +79,8 @@ Episodes contain:
 ### Affiliate Links (scripts/affiliateLink.js)
 - `node scripts/affiliateLink.js search "キーワード" ["表示テキスト"]` - Amazon 検索リンクを生成
 - `node scripts/affiliateLink.js product <ASIN> ["表示テキスト"]` - Amazon 商品リンクを生成
-- Tracking ID は momit.fm 専用の `momitfm-site-22`（hub.momit.fm の `momithub-22` とは別物）
-- 表示テキストを渡すと `（PR）` 付きのアンカー HTML も出力する。詳細は `affiliate-links` スキル
+- Tracking ID は `momitfm-site-22`
+- 表示テキストを渡すとアンカー HTML も出力する（ラベル・URL は HTML エスケープ済み）。詳細は `affiliate-links` スキル
 
 ### Transcript Processing (scripts/convertTranscript.js)
 Converts raw transcript text files into structured JSON format for episodes.
