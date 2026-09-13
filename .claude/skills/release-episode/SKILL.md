@@ -1,6 +1,6 @@
 ---
 name: release-episode
-description: Orchestrate the full momit.fm podcast episode release workflow — transcript conversion, title/shownote/chapter generation, Art19 upload bundle, post-publication announcement, and PR-based commit. Use when releasing a new episode end-to-end.
+description: Orchestrate the full momit.fm podcast episode release workflow — Riverside editing, transcript conversion, title/shownote generation, Art19 upload bundle, post-publication announcement, and PR-based commit. Use when releasing a new episode end-to-end.
 ---
 
 You are the orchestrator for releasing a new momit.fm podcast episode. Guide the user through each step, pausing for confirmation before proceeding.
@@ -10,12 +10,22 @@ You are the orchestrator for releasing a new momit.fm podcast episode. Guide the
 
 ## Workflow
 
-### Pre-flight Check
-Verify that the Riverside transcript file exists:
+### Step 0: Riverside Editing (if the recording has not been edited yet)
+Check each artifact independently — they arrive from separate downloads and either can be missing on its own:
 ```bash
-ls ~/Downloads/momitfm$1.txt
+ls -la ~/Downloads/momitfm$1.txt ~/Downloads/momitfm$1.mp3 2>&1
 ```
-If not found, ask the user to export the transcript from Riverside.fm and save it as `~/Downloads/momitfm$1.txt`.
+
+**A missing file does not mean the recording is unedited.** An interrupted or misnamed download leaves the edit fully applied in Riverside. Re-running the whole editing skill against that edit would cut and overlay it a second time, so route on the state of the *edit*, not the state of `~/Downloads`:
+
+| State | Do |
+|---|---|
+| Both files present | Skip Step 0 entirely. |
+| Either file missing | Invoke `edit-riverside` and let it **enter at Step 2.5**, never at Step 3. Step 2.5 reads `editing_compare_revisions` and decides per pass what still needs running — including the partial case, where some passes ran and others did not. |
+
+Entering at Step 3 is what re-applies a pass that already ran, so the entry point is the whole mitigation. Do not skip ahead on the assumption that an edit is untouched.
+
+If the Riverside MCP is unavailable (not connected, or the account is below the Grow plan), fall back to the manual route: ask the user to edit and export in the Riverside UI and save the files as `~/Downloads/momitfm$1.{mp3,txt}`.
 
 ---
 
@@ -46,12 +56,12 @@ Present the shownote for user review. Apply any requested edits.
 
 ---
 
-### Step 4: Chapter Generation
-Generate chapter markers from the transcript.
+### Step 4: Chapter Outline (internal only)
+Generate a timestamped topic outline from the transcript. **This is not published** — Art19 has no chapter field. Use it to sanity-check the shownote's topic order and to pick ad insertion points.
 
 Invoke the `generate-chapters` skill with episode number $1.
 
-Present chapters for user review.
+Present the outline for user review. Remind them it is reference material, not an Art19 field.
 
 ---
 
@@ -74,7 +84,7 @@ Fallback（ブラウザ自動化が使えない場合）— manual steps:
 Art19 にアップロードしてください:
 1. Art19 ダッシュボード → New Episode
 2. 音源ファイルをアップロード
-3. 上記バンドルからタイトル・Description・Chapters をコピペ
+3. 上記バンドルからタイトル・Description をコピペ（Chapters 欄は Art19 に存在しない）
 4. 広告ポイントを設定
 5. プレビュー確認 → 公開
 
@@ -165,7 +175,6 @@ Automate the PR flow — do not push to `main` directly.
    - [x] Transcript converted and committed
    - [x] Title selected
    - [x] Shownote generated
-   - [x] Chapters created
    - [x] Art19 uploaded
    - [x] Announcement text ready
    - [x] PR #<num> merged

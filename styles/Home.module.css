@@ -226,6 +226,12 @@
   width: 100%;
 }
 
+.footer_disclosure {
+  font-size: 0.8rem;
+  color: #6b6b60;
+  padding: 0 1rem 0.5rem;
+}
+
 .footer ul {
   padding: 0;
 }

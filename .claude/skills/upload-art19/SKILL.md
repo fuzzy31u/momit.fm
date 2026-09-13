@@ -25,18 +25,20 @@ You are uploading a momit.fm episode to Art19 via browser automation. All steps 
 7. **Description is a Quill editor.** Set rich text (anchors, bold) via the Quill API — see `references/browser-recipes.md`. Plain typing loses links.
 8. **Pre-Roll 1 and Post-Roll 1 markers are auto-created** on audio upload. Only the Mid-Roll needs adding.
 9. **Episode Number field stays empty** — the number is already in the title.
-10. **Login is manual.** If redirected to `art19.com/login`, ask the user to sign in in their own browser window (same profile shares cookies with the automation tab). Never enter credentials.
+10. **Affiliate links use `tag=momitfm-site-22`.** Verify every `amazon.co.jp` href after setting the description. The description carries no disclosure text — Amazon's required statement lives on the site's main page, in `components/Footer.tsx`.
+11. **Login is manual.** If redirected to `art19.com/login`, ask the user to sign in in their own browser window (same profile shares cookies with the automation tab). Never enter credentials.
 
 ## Workflow
 
 ### Step 1: Open entry page & create episode
 - Load claude-in-chrome tools (one ToolSearch batch), get tab context, navigate to the entry page.
-- If redirected to login → user signs in manually (fact 10), then re-navigate.
+- If redirected to login → user signs in manually (fact 11), then re-navigate.
 - `find` "New Episode" button → click. A new episode edit page opens (`.../episodes/{uuid}/edit?new=true`).
 
 ### Step 2: Fill title & description
 - Title: `form_input` on the Title textbox.
-- Description: Quill API recipe in `references/browser-recipes.md`. Build the HTML from the prepare-episode bundle (anchors for #momitfm, お便りフォーム, hub article, credits).
+- Description: Quill API recipe in `references/browser-recipes.md`. Build the HTML from the prepare-episode bundle (anchors for #momitfm, お便りフォーム, hub article, credits, and any Amazon affiliate links).
+- After setting it, assert from the editor DOM before moving on: every `amazon.co.jp` anchor carries `tag=momitfm-site-22` (fact 10).
 - Leave Episode Number blank. Type=Full, Rating=Clean are correct defaults.
 
 ### Step 3: Save as Draft (no Start Date yet)
@@ -61,7 +63,7 @@ Ask: keep as **Draft** (no date — user sets it when publishing) or **Schedule*
 
 ### Step 7: Final save & report
 - Click Save (top of form). Verify status badge (Draft/Scheduled) via page text.
-- Report to the user: episode URL, status, and remaining manual items (chapters if not entered, review before publish).
+- Report to the user: episode URL, status, and remaining manual items (review, then publish). **Do not offer to enter chapters** — Art19 has no chapter field (see `../prepare-episode/references/art19-checklist.md`).
 
 ## Error handling
 - **Save click does nothing (no network request, URL stays on /edit)** → the Save button lives in the page header, outside the form; its binding can silently break. Fire the submit directly: `document.querySelector('form.ui__form').requestSubmit()`, then confirm a `PUT /episodes/{uuid}` → 200 via read_network_requests. Verify persistence with `fetch('https://art19.com/episodes/{uuid}', {headers:{Accept:'application/vnd.api+json'}, credentials:'include'})` — check the `description` attribute (HTML; `description_plain` strips links so never use it to verify anchors).

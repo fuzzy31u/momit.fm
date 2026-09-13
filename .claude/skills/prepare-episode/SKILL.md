@@ -1,6 +1,6 @@
 ---
 name: prepare-episode
-description: Consolidate momit.fm episode materials (title, shownote, chapters, ad points) into a copy-paste-ready Art19 upload bundle. Use after generating titles/shownote/chapters and before manual Art19 upload.
+description: Consolidate momit.fm episode materials (title, shownote, ad points) into a copy-paste-ready Art19 upload bundle. Use after generating titles/shownote and before manual Art19 upload.
 ---
 
 You are tasked with consolidating all generated materials for uploading a momit.fm episode to Art19.
@@ -13,7 +13,7 @@ Before running this skill, the following should already be generated:
 - Transcript: `public/transcripts/$1.json`
 - Title candidates (from the `generate-titles` skill)
 - Shownote (from the `generate-shownote` skill)
-- Chapters (from the `generate-chapters` skill)
+- Chapter outline (from the `generate-chapters` skill) — **internal only, not uploaded**
 
 ## Steps
 
@@ -30,8 +30,8 @@ Before running this skill, the following should already be generated:
 3. **Generate all content** by reading the transcript and producing:
    - Top 3 title candidates
    - Full shownote (plain text, ready to paste)
-   - Chapter markers (Art19 format)
-   - 2-3 ad insertion point suggestions
+   - Chapter outline (reference only — Art19 has no chapter field; see `references/art19-checklist.md`)
+   - 2-3 ad insertion point suggestions (from `generate-chapters`, on scaled audio time — never raw transcript time)
 
 4. **Output as Art19 Upload Bundle**:
 
@@ -51,24 +51,24 @@ Art19 Upload Bundle — Episode $1
 [Shownote 全文をここに出力]
 ---
 
-## 3. Chapters (copy below)
+## 3. Chapter outline (reference only — do NOT paste into Art19)
 ---
 00:00:00 オープニング
 00:MM:SS [トピック]
 ...
 ---
+Art19 にチャプター欄はない。構成確認と広告ポイント選定にのみ使う。
 
-## 4. Ad Insertion Points
+## 4. Ad Insertion Points（音声時間・推定値）
 ---
 1. 00:MM:SS — [理由]
 2. 00:MM:SS — [理由]
 ---
 
 ## 5. Checklist
-- [ ] Audio file exported from Riverside
+- [ ] Audio edited and exported from Riverside (via `edit-riverside`, or manually)
 - [ ] Title pasted
 - [ ] Description pasted
-- [ ] Chapters entered
 - [ ] Ad markers set
 - [ ] Preview checked
 - [ ] Published

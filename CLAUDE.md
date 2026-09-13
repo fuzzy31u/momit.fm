@@ -21,12 +21,14 @@ This is a Next.js-based podcast website for momit.fm, a Japanese parenting and t
 ### Podcast Release Workflow
 Skills under `.claude/skills/` (auto-discovered by Claude Code). Invoke by name with the episode number:
 - `release-episode` — Full guided workflow (orchestrates the skills below + PR flow)
+- `edit-riverside` — Edit the recording in Riverside via MCP (Magic Audio, pause removal, 「なんか」「あの」 cuts, intro/outro overlay) and export
 - `convert-transcript` — Convert Riverside transcript to JSON
 - `generate-titles` — Generate 10 title candidates
 - `generate-shownote` — Generate episode description from transcript
-- `generate-chapters` — Generate chapter markers from transcript
+- `generate-chapters` — Generate a timestamped topic outline from the transcript (internal aid; Art19 has no chapter field)
 - `prepare-episode` — Consolidate all materials for Art19 upload
 - `generate-announcement` — Generate SNS announcement text
+- `affiliate-links` — Issue Amazon アソシエイト links (`momitfm-site-22`)
 
 Shared references bundled inside the skills:
 - `.claude/skills/_shared/episode-style-guide.md` (used by titles/shownote/chapters)
@@ -73,6 +75,12 @@ Episodes contain:
 - `node scripts/renameDownloads.js [episode-number]` - Rename Riverside downloads (txt/srt/mp3) to momitfm{N} convention
 - Auto-detects next episode number from RSS feed if not specified
 - Finds the most recently modified files in ~/Downloads (past 7 days, excludes already-renamed momitfm* files)
+
+### Affiliate Links (scripts/affiliateLink.js)
+- `node scripts/affiliateLink.js search "キーワード" ["表示テキスト"]` - Amazon 検索リンクを生成
+- `node scripts/affiliateLink.js product <ASIN> ["表示テキスト"]` - Amazon 商品リンクを生成
+- Tracking ID は `momitfm-site-22`
+- 表示テキストを渡すとアンカー HTML も出力する（ラベル・URL は HTML エスケープ済み）。詳細は `affiliate-links` スキル
 
 ### Transcript Processing (scripts/convertTranscript.js)
 Converts raw transcript text files into structured JSON format for episodes.

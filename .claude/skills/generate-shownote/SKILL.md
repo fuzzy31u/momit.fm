@@ -1,6 +1,6 @@
 ---
 name: generate-shownote
-description: Generate a momit.fm podcast shownote (episode description) in plain text from a Japanese transcript, following the established style guide with topic emojis and ad-insertion suggestions.
+description: Generate a momit.fm podcast shownote (episode description) in plain text from a Japanese transcript, following the established style guide with topic emojis and Amazon affiliate links. Ad insertion points come from generate-chapters, not here.
 ---
 
 You are tasked with generating a podcast episode shownote (description) from a Japanese transcript.
@@ -81,6 +81,7 @@ Generate a plain text description following momit.fm's established style.
 - **Descriptions**: Concise explanations using em dash (–) separator. 1 文で簡潔に
 - **Topic count**: Main themes 3-5 + sub-topics as needed (total 5-12)
 - **Links**: Art19 Description は HTML。表示テキストにハイパーリンク（アンカー）を設定する。生 URL や `Link Text (URL)` は使わない。記事はタイトル文字列自体にリンクを貼る
+- **Affiliate**: 商品が紹介されたら Amazon アソシエイトリンクを貼る。概要に PR 表記は入れない（Amazon 指定文言はサイトのフッターが担当）。規約は `affiliate-links` スキル
 - **Separator**: Use `…………………………………………………………………` (full-width ellipsis × 15)
 - **Blank lines**: Use single blank lines between sections for readability
 - **Avoid**: Picking up too much from ice-break / small talk at the beginning. Focus on main topics
@@ -90,18 +91,15 @@ Generate a plain text description following momit.fm's established style.
 2. Read the transcript from $1
 3. Identify main discussion topics (skip ice-break, focus on substantive content)
 4. Understand the overall theme and context
-5. Generate plain text description matching the established style
-6. Output the shownote
+5. **Spot the concrete products** — books, manga, gadgets, services the hosts actually recommended (not passing mentions). Then invoke the `affiliate-links` skill, which owns the rules: verify each real product name first (the Riverside Japanese ASR mangles proper nouns), then issue links with `node scripts/affiliateLink.js` under momit.fm's own tracking ID.
+6. Generate plain text description matching the established style, linking each product's topic heading
+7. Do **not** add any disclosure text to the description — no `（PR）` labels, no summary line. The Amazon Associates statement lives in the site footer (`components/Footer.tsx`); see the `affiliate-links` skill.
+8. Output the shownote, and list the affiliate links separately so the user can check the keywords
 
-## Ad Insertion Points (Bonus)
+## Ad Insertion Points — not here
 
-After the shownote, suggest 2-3 ad insertion points:
-```
----
-📍 広告挿入ポイント候補:
-1. HH:MM:SS — [トピック転換の説明]
-2. HH:MM:SS — [トピック転換の説明]
-3. HH:MM:SS — [トピック転換の説明]
-```
+Do **not** suggest ad insertion points from this skill. Transcript time runs minutes ahead of the mp3 (see `edit-riverside` fact 16), and nothing here measures that drift, so any timestamp emitted from this skill would land late by exactly the amount the listener notices — mid-sentence in a later topic.
+
+`generate-chapters` already computes the scale factor `k` and locates the topic transitions, so ad points come from there.
 
 Generate the shownote now.
