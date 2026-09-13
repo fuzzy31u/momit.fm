@@ -60,6 +60,17 @@ Call `platform_list_productions` once.
 
 Hold `editId` and the current `revision`. **Record this starting revision** — Step 7 diffs against it.
 
+### Step 2.5: Is this edit already done?
+Before any write, call `editing_compare_revisions` from the edit's first revision to its current one. It attributes each cut and mute to the pass that produced it, so it tells you which of Steps 3-6 have already run.
+
+**The cleanup passes are not idempotent** — `editing_remove_pauses` and `editing_cut_time_ranges` cut again, and `editing_insert_audio` overlays a second copy of the intro. So:
+
+- Passes already applied → **skip those steps**. Say which ones you skipped and why.
+- Everything already applied → the edit is finished; go straight to Step 8 (export).
+- Nothing applied → continue to Step 3.
+
+This is the common case when a download failed and the release workflow re-entered this skill (see `release-episode` Step 0).
+
 ### Step 3: Magic Audio
 `editing_set_magic_audio` on each recording track. It only changes how a track sounds — it removes nothing and creates no cuts, so it is order-independent and does not affect the axes.
 

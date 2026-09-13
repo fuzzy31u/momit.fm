@@ -23,21 +23,31 @@ You are tasked with generating chapter markers for a momit.fm podcast episode.
    - Primary: `public/transcripts/$1.json`
    - Fallback: `~/Downloads/momitfm$1.txt`
 
-3. **Analyze topic transitions**:
+3. **Measure the drift and compute the scale factor.** The transcript is cut from the raw recording while the mp3 is the edited export, so transcript times run ahead by minutes. Every timestamp you emit must be scaled, or ad points land well after the transition they were meant to mark.
+   ```bash
+   ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 \
+     ~/Downloads/momitfm$1.mp3
+   ```
+   `k = audio_duration_seconds / transcript_end_seconds`, where `transcript_end` is the last segment's timestamp. Report `k` and the resulting end-of-episode drift so the size of the correction is visible.
+
+   If the mp3 is not available, say so and emit **transcript times only**, labelled as unscaled — never present unscaled times as audio times.
+
+4. **Analyze topic transitions**:
    - Identify where the conversation shifts to a new subject
    - Look for explicit topic introductions ("次の話題", "もう一個", "ちょっと話変わるんですけど")
    - Distinguish ice-break / small talk from main content
    - Note natural pause points between major themes
 
-4. **Generate 5-8 chapters**:
+5. **Generate 5-8 chapters**:
+   - Pick the transition points on the transcript, then multiply each by `k` to get the audio time
    - First chapter starts at `00:00:00` (e.g., "オープニング" or episode theme)
    - Each chapter: timestamp + concise Japanese title
    - Titles should be short (under 30 characters) and descriptive
    - Match the casual, conversational tone of the podcast
 
-5. **Output in two formats**:
+6. **Output in two formats**:
 
-### Art19 用（コピペ用）
+### 一覧（音声時間・スケール済み）
 ```
 00:00:00 オープニング
 00:MM:SS [トピック1]
@@ -48,12 +58,13 @@ You are tasked with generating chapter markers for a momit.fm podcast episode.
 
 ### 確認用（詳細）
 ```
-| Time | Chapter | Notes |
-|------|---------|-------|
-| 00:00:00 | オープニング | [何について話し始めたか] |
-| 00:MM:SS | [トピック] | [転換のきっかけ] |
+| 音声時間 | 文字起こし時間 | ずれ | Chapter | Notes |
+|---|---|---|---|---|
+| 00:00:00 | 00:00:00 | - | オープニング | [何について話し始めたか] |
+| 00:MM:SS | 00:MM:SS | -M:SS | [トピック] | [転換のきっかけ] |
 ...
 ```
+Showing both axes makes the scaling auditable — a reader can check `k` was applied.
 
 ## Guidelines
 - Chapters should be roughly evenly spaced (avoid clustering)

@@ -10,14 +10,22 @@ You are the orchestrator for releasing a new momit.fm podcast episode. Guide the
 
 ## Workflow
 
-### Step 0: Riverside Editing (if the materials are not there yet)
-Verify that the Riverside materials exist:
+### Step 0: Riverside Editing (if the recording has not been edited yet)
+Check each artifact independently — they arrive from separate downloads and either can be missing on its own:
 ```bash
-ls ~/Downloads/momitfm$1.txt ~/Downloads/momitfm$1.mp3
+ls -la ~/Downloads/momitfm$1.txt ~/Downloads/momitfm$1.mp3 2>&1
 ```
-If they are missing, the recording has not been edited and exported yet. Invoke the `edit-riverside` skill with episode number $1 — it runs Magic Audio, pause removal and the 「なんか」「あの」 filler cuts, overlays the intro/outro bed, and walks the export through to `~/Downloads/momitfm$1.{mp3,txt,srt}`.
 
-If the Riverside MCP is unavailable (not connected, or the account is below the Grow plan), fall back to the manual route: ask the user to edit and export in the Riverside UI and save the transcript as `~/Downloads/momitfm$1.txt`.
+**A missing file does not mean the recording is unedited.** An interrupted or misnamed download leaves the edit fully applied in Riverside. Re-running the whole editing skill against that edit would cut and overlay it a second time, so route on the state of the *edit*, not the state of `~/Downloads`:
+
+| State | Do |
+|---|---|
+| Both files present | Skip Step 0 entirely. |
+| Either file missing | Ask `edit-riverside` to run **Step 0–2 only** (connect, locate the recording, get the existing edit) and report what `editing_compare_revisions` shows has already been applied. |
+| → the edit already has the cleanup and the intro/outro | Resume at `edit-riverside` **Step 8** (export & download). Do not re-run Steps 3–6. |
+| → no edit exists, or it is untouched | Run `edit-riverside` from Step 3 as normal. |
+
+If the Riverside MCP is unavailable (not connected, or the account is below the Grow plan), fall back to the manual route: ask the user to edit and export in the Riverside UI and save the files as `~/Downloads/momitfm$1.{mp3,txt}`.
 
 ---
 
