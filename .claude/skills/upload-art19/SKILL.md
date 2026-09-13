@@ -25,7 +25,7 @@ You are uploading a momit.fm episode to Art19 via browser automation. All steps 
 7. **Description is a Quill editor.** Set rich text (anchors, bold) via the Quill API — see `references/browser-recipes.md`. Plain typing loses links.
 8. **Pre-Roll 1 and Post-Roll 1 markers are auto-created** on audio upload. Only the Mid-Roll needs adding.
 9. **Episode Number field stays empty** — the number is already in the title.
-10. **Affiliate links must each carry `（PR）`.** If the description contains Amazon links (`tag=momithub-22`), every link's text ends in `（PR）` — that is the ステマ規制 requirement and it is not a style nit. Verify it after setting the description. Do **not** add a long disclosure sentence to the description: Amazon's own required statement belongs on the site's main page and is already in `components/Footer.tsx`.
+10. **Affiliate links must each carry `（PR）`.** If the description contains Amazon links, every href carries `tag=momitfm-site-22` (**not** hub.momit.fm's `momithub-22`) and every link's text ends in `（PR）` — that is the ステマ規制 requirement and it is not a style nit. Verify it after setting the description. Do **not** add a long disclosure sentence to the description: Amazon's own required statement belongs on the site's main page and is already in `components/Footer.tsx`.
 11. **Login is manual.** If redirected to `art19.com/login`, ask the user to sign in in their own browser window (same profile shares cookies with the automation tab). Never enter credentials.
 
 ## Workflow
@@ -38,7 +38,7 @@ You are uploading a momit.fm episode to Art19 via browser automation. All steps 
 ### Step 2: Fill title & description
 - Title: `form_input` on the Title textbox.
 - Description: Quill API recipe in `references/browser-recipes.md`. Build the HTML from the prepare-episode bundle (anchors for #momitfm, お便りフォーム, hub article, credits, and any Amazon affiliate links).
-- After setting it, assert from the editor DOM before moving on: every `amazon.co.jp` anchor carries `tag=momithub-22` and its text ends in `（PR）` (fact 10).
+- After setting it, assert from the editor DOM before moving on: every `amazon.co.jp` anchor carries `tag=momitfm-site-22` and its text ends in `（PR）` (fact 10).
 - Leave Episode Number blank. Type=Full, Rating=Clean are correct defaults.
 
 ### Step 3: Save as Draft (no Start Date yet)
