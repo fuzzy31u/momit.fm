@@ -1,4 +1,7 @@
-const SPEAKER_LINE_RE = /^(.+?)\s*\((\d{1,2}:\d{2}\.\d{2,3})\)$/;
+// Riverside emits variable fractional-second precision: (04:06.8), (00:26.926).
+// Accepting only 2-3 digits silently swallowed the speaker line into the previous
+// speaker's text, merging two turns (ep92, ep97, ep101).
+const SPEAKER_LINE_RE = /^(.+?)\s*\((\d{1,2}:\d{2}\.\d{1,3})\)$/;
 
 function formatTimestamp(timestamp) {
   const [minSec] = timestamp.split('.');
