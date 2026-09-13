@@ -1,6 +1,6 @@
 ---
 name: generate-shownote
-description: Generate a momit.fm podcast shownote (episode description) in plain text from a Japanese transcript, following the established style guide with topic emojis and ad-insertion suggestions.
+description: Generate a momit.fm podcast shownote (episode description) in plain text from a Japanese transcript, following the established style guide with topic emojis and Amazon affiliate links. Ad insertion points come from generate-chapters, not here.
 ---
 
 You are tasked with generating a podcast episode shownote (description) from a Japanese transcript.
@@ -96,15 +96,10 @@ Generate a plain text description following momit.fm's established style.
 7. Do **not** add any disclosure text to the description — no `（PR）` labels, no summary line. The Amazon Associates statement lives in the site footer (`components/Footer.tsx`); see the `affiliate-links` skill.
 8. Output the shownote, and list the affiliate links separately so the user can check the keywords
 
-## Ad Insertion Points (Bonus)
+## Ad Insertion Points — not here
 
-After the shownote, suggest 2-3 ad insertion points:
-```
----
-📍 広告挿入ポイント候補:
-1. HH:MM:SS — [トピック転換の説明]
-2. HH:MM:SS — [トピック転換の説明]
-3. HH:MM:SS — [トピック転換の説明]
-```
+Do **not** suggest ad insertion points from this skill. Transcript time runs minutes ahead of the mp3 (see `edit-riverside` fact 16), and nothing here measures that drift, so any timestamp emitted from this skill would land late by exactly the amount the listener notices — mid-sentence in a later topic.
+
+`generate-chapters` already computes the scale factor `k` and locates the topic transitions, so ad points come from there.
 
 Generate the shownote now.

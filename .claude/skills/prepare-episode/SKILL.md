@@ -31,7 +31,7 @@ Before running this skill, the following should already be generated:
    - Top 3 title candidates
    - Full shownote (plain text, ready to paste)
    - Chapter outline (reference only — Art19 has no chapter field; see `references/art19-checklist.md`)
-   - 2-3 ad insertion point suggestions
+   - 2-3 ad insertion point suggestions (from `generate-chapters`, on scaled audio time — never raw transcript time)
 
 4. **Output as Art19 Upload Bundle**:
 
@@ -59,7 +59,7 @@ Art19 Upload Bundle — Episode $1
 ---
 Art19 にチャプター欄はない。構成確認と広告ポイント選定にのみ使う。
 
-## 4. Ad Insertion Points
+## 4. Ad Insertion Points（音声時間・推定値）
 ---
 1. 00:MM:SS — [理由]
 2. 00:MM:SS — [理由]

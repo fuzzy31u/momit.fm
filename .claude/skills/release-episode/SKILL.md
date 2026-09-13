@@ -21,9 +21,9 @@ ls -la ~/Downloads/momitfm$1.txt ~/Downloads/momitfm$1.mp3 2>&1
 | State | Do |
 |---|---|
 | Both files present | Skip Step 0 entirely. |
-| Either file missing | Ask `edit-riverside` to run **Step 0–2 only** (connect, locate the recording, get the existing edit) and report what `editing_compare_revisions` shows has already been applied. |
-| → the edit already has the cleanup and the intro/outro | Resume at `edit-riverside` **Step 8** (export & download). Do not re-run Steps 3–6. |
-| → no edit exists, or it is untouched | Run `edit-riverside` from Step 3 as normal. |
+| Either file missing | Invoke `edit-riverside` and let it **enter at Step 2.5**, never at Step 3. Step 2.5 reads `editing_compare_revisions` and decides per pass what still needs running — including the partial case, where some passes ran and others did not. |
+
+Entering at Step 3 is what re-applies a pass that already ran, so the entry point is the whole mitigation. Do not skip ahead on the assumption that an edit is untouched.
 
 If the Riverside MCP is unavailable (not connected, or the account is below the Grow plan), fall back to the manual route: ask the user to edit and export in the Riverside UI and save the files as `~/Downloads/momitfm$1.{mp3,txt}`.
 

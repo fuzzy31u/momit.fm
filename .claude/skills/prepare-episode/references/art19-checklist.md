@@ -11,7 +11,7 @@ Art19 にエピソードを手動アップロードする際の入力フィー�
 | 音源ファイル | Riverside.fm で編集・エクスポート（`edit-riverside` スキル）。**再エンコードしない** | MP3/WAV |
 | タイトル | `/generate-titles` で候補生成 → 選択 | Plain text |
 | 説明文（Shownote） | `/generate-shownote` で生成 | Plain text |
-| 広告挿入ポイント | Shownote 生成時にサジェスト（既定は音源の中点） | タイムスタンプ |
+| 広告挿入ポイント | `/generate-chapters` がスケール済み音声時間でサジェスト（既定は音源の中点） | タイムスタンプ |
 | アフィリエイトリンク | `/generate-shownote` が商品を検出 → `affiliate-links` スキルが発行 | `tag=momitfm-site-22` 付き URL。PR 表記はサイトのフッター側 |
 
 ## Art19 入力フィールド

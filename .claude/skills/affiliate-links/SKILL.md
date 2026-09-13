@@ -52,8 +52,10 @@ Amazonのアソシエイトとして、momit.fm は適格販売により収入�
 Link the **concrete products the hosts actually recommended** — books, manga, gadgets, services. Skip passing mentions and small talk. In the description, the topic heading becomes the anchor:
 
 ```html
-<p>🧪 <a href="https://www.amazon.co.jp/s?k=...&tag=momitfm-site-22" rel="noopener noreferrer" target="_blank"><strong>Dr.STONE は圧倒的1位</strong></a> – 説明文</p>
+<p>🧪 <a href="https://www.amazon.co.jp/s?k=...&amp;tag=momitfm-site-22" rel="noopener noreferrer" target="_blank"><strong>Dr.STONE は圧倒的1位</strong></a> – 説明文</p>
 ```
+
+The `&amp;` is what `buildAnchorHtml` emits — paste its output as-is rather than re-escaping or un-escaping by hand.
 
 ## Before handing off
 

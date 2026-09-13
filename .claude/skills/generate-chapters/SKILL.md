@@ -30,6 +30,8 @@ You are tasked with generating chapter markers for a momit.fm podcast episode.
    ```
    `k = audio_duration_seconds / transcript_end_seconds`, where `transcript_end` is the last segment's timestamp. Report `k` and the resulting end-of-episode drift so the size of the correction is visible.
 
+   **`k` is slightly high, and the error pushes results late.** Segments carry only a start timestamp, so `transcript_end` is where the last segment *begins*, not where it ends — the true transcript is longer, which makes the divisor too small. The residual is bounded by the final segment's own length (seconds, not minutes), but it runs in the same direction as the drift being corrected. When an ad point is borderline, round it **down**, never up.
+
    If the mp3 is not available, say so and emit **transcript times only**, labelled as unscaled — never present unscaled times as audio times.
 
 4. **Analyze topic transitions**:
@@ -65,6 +67,19 @@ You are tasked with generating chapter markers for a momit.fm podcast episode.
 ...
 ```
 Showing both axes makes the scaling auditable — a reader can check `k` was applied.
+
+## Ad insertion points
+
+This skill owns them, because it is where `k` is measured and where the topic transitions are already identified. After the chapter list, suggest 2-3 points on scaled audio time:
+
+```
+📍 広告挿入ポイント候補（音声時間・k 適用済み）:
+1. HH:MM:SS — [トピック転換の説明]
+2. HH:MM:SS — [トピック転換の説明]
+3. HH:MM:SS — [トピック転換の説明]
+```
+
+Say plainly that these are estimates and should be confirmed against the waveform at upload. `upload-art19` places a single Mid-Roll at the audio midpoint by default; these are the content-aware alternative.
 
 ## Guidelines
 - Chapters should be roughly evenly spaced (avoid clustering)

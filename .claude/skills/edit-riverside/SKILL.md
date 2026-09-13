@@ -8,7 +8,7 @@ You are editing a momit.fm recording in Riverside through the Riverside MCP (`mc
 
 ## Input
 - Episode number: `$episode`
-- Output contract (what `release-episode` Pre-flight needs): `~/Downloads/momitfm$episode.mp3`, `.txt`, `.srt`
+- Output contract (what `release-episode` Step 0 needs): `~/Downloads/momitfm$episode.mp3` and `.txt`. A `.srt` is not produced by default and is not required — see fact 14.
 
 ## Constants
 
