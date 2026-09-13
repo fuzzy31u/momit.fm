@@ -12,7 +12,7 @@ Art19 にエピソードを手動アップロードする際の入力フィー�
 | タイトル | `/generate-titles` で候補生成 → 選択 | Plain text |
 | 説明文（Shownote） | `/generate-shownote` で生成 | Plain text |
 | 広告挿入ポイント | Shownote 生成時にサジェスト（既定は音源の中点） | タイムスタンプ |
-| アフィリエイトリンク | `/generate-shownote` が商品を検出して発行（規約は `_shared/episode-style-guide.md`） | Amazon URL + `（PR）` 表記 |
+| アフィリエイトリンク | `/generate-shownote` が商品を検出して発行（規約は `_shared/episode-style-guide.md`） | Amazon URL + リンクテキスト末尾の `（PR）`。長文の全体表記はサイトのフッター側 |
 
 ## Art19 入力フィールド
 
