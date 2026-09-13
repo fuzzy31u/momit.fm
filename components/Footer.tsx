@@ -84,6 +84,9 @@ export default function Footer() {
           </ul>
         </section>
       </div>
+      <span className={styles.footer_disclosure}>
+        Amazonのアソシエイトとして、momit.fm は適格販売により収入を得ています。
+      </span>
       <span className={styles.footer_copyright}>Copyright © momit.fm</span>
     </footer>
   );
