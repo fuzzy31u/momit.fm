@@ -14,13 +14,13 @@ You are editing a momit.fm recording in Riverside through the Riverside MCP (`mc
 
 Fill these on the first successful run and keep them here (`TBD` means: discover it, then edit this file).
 
-- `PRODUCTION_ID`: TBD
-- `STUDIO_ID`: TBD
-- `PROJECT_ID`: TBD
-- `INTRO_ASSET_ID`: TBD — the media id of `momit.fm_stream_intro.mp3` in Your Media
-- `INTRO_DURATION_MS`: TBD — from `editing_get_asset_metadata`
-- `PAUSE_THRESHOLD_MS`: TBD — agree with the user on the first run
-- `FILLER_WORDS`: `["なんか", "あの"]`
+- `PRODUCTION_ID`: `65dda57c9aaa32ccaaf05ac0` (seen in `/api/v4/production/...` calls; MCP never confirmed it)
+- `STUDIO_ID`: `98-87TKS`
+- `PROJECT_ID`: per episode — the id in the project URL (`/projects/<id>`); ep102 was `6abe14d2202ec7063a93cd07`
+- `INTRO_ASSET_ID`: TBD — the asset is named `momitfm_theme_intro_v01.mp3` in Your Media → Audio (not `momit.fm_stream_intro.mp3`)
+- `INTRO_DURATION_MS`: ~7800 (UI shows `00:07`)
+- `PAUSE_THRESHOLD_MS`: TBD for MCP. In the UI the Remove-pauses slider has 5 steps (0–4); **step 4 (max)** is the agreed setting (ep102: 40:23 → 39:55)
+- `FILLER_WORDS`: `["なんか", "あの", "ちょっと"]` — 「ちょっと」 added at the user's request on ep102; keep the degree-adverb uses (「もうちょっと」「ちょっと忙しい」「ちょっと経路が違う」 etc.)
 
 ## Critical facts (do not rediscover)
 
@@ -49,7 +49,7 @@ Fill these on the first successful run and keep them here (`TBD` means: discover
 ### Step 0: Connectivity & plan check
 Call `platform_list_productions` once.
 - Auth error → tell the user to run `/mcp` and connect Riverside, then retry.
-- Plan error (MCP requires **Grow or above**; Free/Pro are excluded) → **stop here.** Report that the account does not qualify and that editing stays manual this time. Do not attempt a workaround.
+- Plan error (MCP requires **Grow or above**; Free/Pro are excluded) → the account is on a lower plan and the user does not want to upgrade (decided 2026-10-08). **Switch to the Browser fallback section below** and run the same steps through the Riverside UI via `claude-in-chrome`. Do not keep retrying the MCP.
 - Success → record the production id into Constants if still TBD.
 
 ### Step 1: Locate the recording
@@ -90,7 +90,10 @@ This is the common case when a download failed and the release workflow re-enter
 6. Check `readyToApply`. False, or `payload: null` → **stop**, report the warnings, re-resolve. Do not hand-build a call.
 7. Execute `payload.input` **unchanged** via `editing_cut_time_ranges`, threading `expectedRevision`. Keep the returned revision.
 
-### Step 6: Overlay intro & outro (must be after Step 5)
+### Step 5.5: Cut the opening pre-roll words (rule from 2026-10-08, applies from ep103)
+The episode must start on 「momit.fm は IT 企業で働く…」. Cut everything before it: the host's 「はい、始めます」 (and any lead-in pause). The ASR renders the show name as 「AMITFM」「マミットFM」「モミットFM」 etc., so locate the cut end by the phrase 「は IT 企業で働く」 rather than the brand spelling. No approval gate — this is a standing instruction. It is a cut, so it must come **before** Step 6 (fact 6) and it shifts every playable offset by the removed length.
+
+### Step 6: Overlay intro & outro (must be after Step 5.5)
 1. `editing_get_asset_metadata(INTRO_ASSET_ID)` → duration. (First run: find the asset id via the media tools and write both into Constants.)
 2. Get the playable end from `editing_read_aligned_transcript` — **never** from a source-axis read (fact 2).
 3. `editing_insert_audio` twice on the same asset:
@@ -131,6 +134,19 @@ If the comparison disagrees with what you believe you did, report the comparison
    ls -la ~/Downloads/momitfm$episode.mp3 ~/Downloads/momitfm$episode.txt
    ```
 6. Hand back to `release-episode`.
+
+## Browser fallback (no Grow plan — used for ep102, 2026-10-08)
+
+Same steps, driven through the Riverside UI with `claude-in-chrome`. The user logs in themselves; a `tabs_context_mcp` tab is navigated to the project URL. Verified behaviour:
+
+- **Editor**: Recordings tab → `Edit` on the recording creates/opens the edit (URL `riverside.com/editor/<take>/<clip>/preview`). Check the Edits tab first — "No edits yet" means nothing is applied.
+- **Magic Audio / Remove pauses**: right rail `AI tools`. Toggling Remove pauses shows a 5-step slider; use step 4 (see Constants). Runtime in the transport bar (`mm:ss / total`) is the verification signal.
+- **Transcript text is not in the DOM** (canvas-rendered). Fetch it in page context instead: `GET /api/v4/transcriptions/editableWithVoiceActivity/<take-id>` (same-origin, `credentials:'include'`). Shape: `data.speakers[].sentences[].words[]` = `[text, startMs, durMs, "noise"?]`. Tokens are character-level, so match keywords across adjacent tokens. This gives every filler with timestamp + context for the approval gate.
+- **Filler cuts**: Co-Creator prompt `Remove the filler words 「なんか」 and 「あの」 … Do NOT remove: <timestamp + phrase list>` honours the exceptions well. **It skips tokens that carry trailing punctuation** (`なんか、` `あの、` `ちょっと、`). After it reports "Editing complete", hide deleted parts (search-bar filter icon → untick *Show deleted parts*), search each word and compare the count with the exception count. Fix misses by hand: drag-select the token in the transcript (double-click selects only half of a split token) and press `Delete`. Search for `なんか、` (with the comma) to isolate the misses.
+- **Opening cut (Step 5.5)**: scroll the transcript to the top, drag-select from the first token through the token just before 「momit.fm は」 (ASR: 「AMITFM」 etc.; the first line reads 「はい 始 め ます ᐱ AMITFM は IT 企 業 で…」), press `Delete`, and confirm the first visible word is now the show name. Do this before the intro overlay so 0:00 is the new start.
+- **Intro/outro overlay**: `Your media` → Audio → click the asset. It inserts at the playhead on an overlay track and does not extend the runtime. Put the playhead at 0:00 by clicking the first transcript word (`Home` does nothing; clicking the ruler is imprecise). For the outro, click the last word, zoom the timeline (`+` ×6), click the ruler at end − 8 s, then insert. Overlays are anchored to content: later cuts move the outro with the end, so re-placement after extra cuts was not needed.
+- **Export**: top-right `Export` → `Export` → Audio tab → quality **MP3** (default is WAV HD) → `Export audio only`. Ready in ~1 min under Project → Exports.
+- **Downloads need the user's permission first — and the Exports-tab `Download` button saves the mp3 immediately with no menu.** Ask before clicking it. The transcript is Recordings → Tracks → Transcript → `Download` → *Transcript*. Then Step 8.3–8.5 as usual.
 
 ## Error handling
 

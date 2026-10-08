@@ -52,7 +52,7 @@ Radio values in the AIP Type group: `0`=Pre-Roll, `1`=Mid-Roll, `2`=Post-Roll.
 
 ## Marker timestamp input
 
-The marker editor panel's timestamp textbox has class `spinner-9`; `form_input` with `HH:MM:SS.00` works. The markers list text confirms placement:
+The marker's time follows the **Selection** textbox above the markers list (class `spinner-9c`, 2026-10; the in-panel `spinner-9` textbox is gone). With the new marker's panel open, `form_input` the Selection box with `HH:MM:SS.00` and the marker moves. The markers list text confirms placement:
 
 ```js
 const markers = [...document.querySelectorAll('div,section')].find(e =>
