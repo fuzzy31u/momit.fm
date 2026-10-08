@@ -1,10 +1,10 @@
 ---
 name: edit-riverside
-description: Edit a momit.fm recording in Riverside via the Riverside MCP — Magic Audio, pause removal, Japanese filler-word cuts ("なんか"/"あの"), and overlaying the intro/outro bed without changing the runtime. Step 0 of release-episode. Use when the user says "Riverside 編集", "音声編集", "エピソードN を編集", "edit episode N".
+description: Edit a momit.fm recording in Riverside (MCP, or the browser fallback when the plan lacks MCP) — Magic Audio, pause removal, Japanese filler-word cuts ("なんか"/"あの"/"ちょっと"), the opening cut, and overlaying the intro/outro bed without changing the runtime. Step 0 of release-episode. Use when the user says "Riverside 編集", "音声編集", "エピソードN を編集", "edit episode N".
 arguments: [episode]
 ---
 
-You are editing a momit.fm recording in Riverside through the Riverside MCP (`mcp__riverside__*`). This replaces three manual right-panel operations: AI Tools (Remove pauses + Magic Audio), Your Media (intro/outro insert), and Co-creator ("Remove feeder words なんか and あの").
+You are editing a momit.fm recording in Riverside through the Riverside MCP (`mcp__riverside__*`), or through the Browser fallback section when the MCP is unavailable. This replaces three manual right-panel operations: AI Tools (Remove pauses + Magic Audio), Your Media (intro/outro insert), and Co-creator ("Remove filler words なんか, あの and ちょっと").
 
 ## Input
 - Episode number: `$episode`
@@ -14,7 +14,7 @@ You are editing a momit.fm recording in Riverside through the Riverside MCP (`mc
 
 Fill these on the first successful run and keep them here (`TBD` means: discover it, then edit this file).
 
-- `PRODUCTION_ID`: `65dda57c9aaa32ccaaf05ac0` (seen in `/api/v4/production/...` calls; MCP never confirmed it)
+- `PRODUCTION_ID`: UNVERIFIED — `65dda57c9aaa32ccaaf05ac0` appears in the web app's `/api/v4/production/...` calls, but the MCP has never confirmed it is the same entity. Treat as TBD for MCP purposes: Step 0 must confirm it from `platform_list_productions` before any MCP read uses it
 - `STUDIO_ID`: `98-87TKS`
 - `PROJECT_ID`: per episode — the id in the project URL (`/projects/<id>`); ep102 was `6abe14d2202ec7063a93cd07`
 - `INTRO_ASSET_ID`: TBD — the asset is named `momitfm_theme_intro_v01.mp3` in Your Media → Audio (not `momit.fm_stream_intro.mp3`)
@@ -42,7 +42,7 @@ Fill these on the first successful run and keep them here (`TBD` means: discover
 13. **Riverside's download filenames are not episode-shaped.** Audio arrives as `riverside_edit_- <studio name>_<internal n>.mp3` (the trailing number is Riverside's own counter, **not** the episode number) and the transcript as `<studio-slug> (<n>).txt` — e.g. `riverside_edit_- miho & yu_98.mp3` + `miho-yu (4).txt` for episode 101. `scripts/renameDownloads.js` maps both onto `momitfm{N}.*` by mtime.
 14. **No `.srt` is produced by default.** Only the audio and the `.txt` transcript come down. `convert-transcript` and Art19 need only those two, so a missing `.srt` is not an error.
 15. **Do NOT down-convert the export — Art19 re-encodes everything to 128 kbps on delivery.** Every published enclosure is ~128 kbps regardless of what was uploaded (verified 2026-09 across ep97–101, including ep100 which was uploaded at 64 kbps). The old "64 kbps house standard" described the *uploaded* file, not what listeners receive, so down-converting only adds a lossy generation ahead of Art19's own transcode and makes the delivered audio worse. **Upload Riverside's export as-is.** Shrinking it is justified only when upload time is the actual problem — say so and get the user's agreement first.
-16. **The transcript is cut from the RAW recording; the mp3 is the EDITED export.** Their timelines do not match — every pause removed and every filler cut makes the transcript run ahead, and the gap accumulates toward the end (ep98 +5:43, ep99 +3:39, ep101 +3:15, ep100 +0:27). Any timestamp derived from the transcript therefore drifts late in the episode; scale by `audio_duration / transcript_end` and say it is an estimate. This is long-standing behaviour, not a regression. It matters for ad insertion points — chapters themselves are never published (Art19 has no chapter field).
+16. **The transcript is cut from the RAW recording; the mp3 is the EDITED export.** Their timelines do not match — every pause removed and every filler cut makes the transcript run ahead, and the gap accumulates toward the end (ep98 +5:43, ep99 +3:39, ep101 +3:15, ep102 +1:23, ep100 +0:27). Any timestamp derived from the transcript therefore drifts late in the episode; scale by `audio_duration / transcript_end` and say it is an estimate. This is long-standing behaviour, not a regression. It matters for ad insertion points — chapters themselves are never published (Art19 has no chapter field).
 
 ## Workflow
 
@@ -50,7 +50,7 @@ Fill these on the first successful run and keep them here (`TBD` means: discover
 Call `platform_list_productions` once.
 - Auth error → tell the user to run `/mcp` and connect Riverside, then retry.
 - Plan error (MCP requires **Grow or above**; Free/Pro are excluded) → the account is on a lower plan and the user does not want to upgrade (decided 2026-10-08). **Switch to the Browser fallback section below** and run the same steps through the Riverside UI via `claude-in-chrome`. Do not keep retrying the MCP.
-- Success → record the production id into Constants if still TBD.
+- Success → compare the returned production id with Constants; record it if TBD, and replace the UNVERIFIED value if it differs.
 
 ### Step 1: Locate the recording
 `platform_list_projects` → `platform_list_recordings`. Identify the session for episode `$episode`. If several takes exist, show them (date, duration) and ask which one. Never guess the take.
@@ -77,14 +77,15 @@ This is the common case when a download failed and the release workflow re-enter
 ### Step 4: Remove pauses
 `editing_remove_pauses` with `PAUSE_THRESHOLD_MS` and `expectedRevision`. On the first run, agree the threshold with the user before calling — too low and the speech sounds clipped. Keep the returned revision.
 
-### Step 5: Cut 「なんか」「あの」
+### Step 5: Cut 「なんか」「あの」「ちょっと」
 
 1. `editing_read_aligned_transcript` in **word-detail** mode, windowed across the episode. Widen a window rather than assuming the transcript ended.
 2. Collect the word handles matching `FILLER_WORDS` (fact 7 — pass handles through untouched).
 3. Drop the meaningful uses, which are not fillers:
-   - 「あの」 as a demonstrative — 「あの人」「あの時」「あの話」「あのとき」「あの番組」 etc. (followed by a noun)
-   - 「なんか」 in its substantive sense — 「なんか食べたい」「なんかない?」「〜なんか」 as a particle (「私なんか」)
-   Keep only the interjectional/hesitation uses.
+   - 「あの」 as a demonstrative — 「あの人」「あの時」「あの話」「あのとき」「あの番組」「あのレポート」 etc. (followed by a noun)
+   - 「なんか」 in its substantive sense — 「なんか食べたい」「なんかない?」「〜なんか」 as a particle (「私なんか」「日本なんか」「パンなんか」)
+   - 「ちょっと」 as a degree adverb — 「もうちょっと」「ちょっと忙しい」「ちょっと間が空いた」「ちょっと経路が違う」 (modifying an adjective/verb with the sense "a little"). The softener before a clause (「ちょっとまず最初に」「ちょっとね」) is the filler
+   Keep only the interjectional/hesitation uses. On ep102 this kept 5 of 93 なんか/あの and 9 of 53 ちょっと.
 4. **Approval gate (default ON).** Present the candidates as a numbered list with a short before/after context snippet each, plus the count and estimated time saved. Wait for approval; cut only what the user approved. Skip this gate only when invoked with `--auto`.
 5. `editing_resolve_transcript_selection` with intent `remove`, against the **same revision** the transcript read returned.
 6. Check `readyToApply`. False, or `payload: null` → **stop**, report the warnings, re-resolve. Do not hand-build a call.
@@ -140,10 +141,11 @@ If the comparison disagrees with what you believe you did, report the comparison
 Same steps, driven through the Riverside UI with `claude-in-chrome`. The user logs in themselves; a `tabs_context_mcp` tab is navigated to the project URL. Verified behaviour:
 
 - **Editor**: Recordings tab → `Edit` on the recording creates/opens the edit (URL `riverside.com/editor/<take>/<clip>/preview`). Check the Edits tab first — "No edits yet" means nothing is applied.
+- **Step 2.5 equivalent (an edit already exists)**: there is no revision diff in the UI, so read each pass's state before touching it. `AI tools` panel: the Magic Audio and Remove pauses toggles show ON if applied (the runtime under the transport bar drops below the recording length). Fillers: hide deleted parts and search 「なんか」「あの」「ちょっと」 — counts at or near the exception counts mean the pass ran. Opening cut: the first visible transcript word is the show name. Overlays: the overlay track (above the main track) shows the intro clip at 0:00 and the outro at the end. Skip every pass that is already applied; the passes are not idempotent here either (a second Remove pauses toggle-off/on re-cuts, a second asset click inserts a second overlay).
 - **Magic Audio / Remove pauses**: right rail `AI tools`. Toggling Remove pauses shows a 5-step slider; use step 4 (see Constants). Runtime in the transport bar (`mm:ss / total`) is the verification signal.
 - **Transcript text is not in the DOM** (canvas-rendered). Fetch it in page context instead: `GET /api/v4/transcriptions/editableWithVoiceActivity/<take-id>` (same-origin, `credentials:'include'`). Shape: `data.speakers[].sentences[].words[]` = `[text, startMs, durMs, "noise"?]`. Tokens are character-level, so match keywords across adjacent tokens. This gives every filler with timestamp + context for the approval gate.
-- **Filler cuts**: Co-Creator prompt `Remove the filler words 「なんか」 and 「あの」 … Do NOT remove: <timestamp + phrase list>` honours the exceptions well. **It skips tokens that carry trailing punctuation** (`なんか、` `あの、` `ちょっと、`). After it reports "Editing complete", hide deleted parts (search-bar filter icon → untick *Show deleted parts*), search each word and compare the count with the exception count. Fix misses by hand: drag-select the token in the transcript (double-click selects only half of a split token) and press `Delete`. Search for `なんか、` (with the comma) to isolate the misses.
-- **Opening cut (Step 5.5)**: scroll the transcript to the top, drag-select from the first token through the token just before 「momit.fm は」 (ASR: 「AMITFM」 etc.; the first line reads 「はい 始 め ます ᐱ AMITFM は IT 企 業 で…」), press `Delete`, and confirm the first visible word is now the show name. Do this before the intro overlay so 0:00 is the new start.
+- **Filler cuts**: Co-Creator prompt `Remove the filler words 「なんか」, 「あの」 and 「ちょっと」 … Do NOT remove: <timestamp + phrase list from Step 5.3>` honours the exceptions well (ep102 ran it as two prompts, なんか/あの then ちょっと; one prompt with all three should work the same). **It skips tokens that carry trailing punctuation** (`なんか、` `あの、` `ちょっと、`). After it reports "Editing complete", hide deleted parts (search-bar filter icon → untick *Show deleted parts*), search each word and compare the count with the exception count. Fix misses by hand: drag-select the token in the transcript (double-click selects only half of a split token) and press `Delete`. Search for `なんか、` (with the comma) to isolate the misses.
+- **Opening cut (Step 5.5) — NOT yet exercised; first run is ep103**: scroll the transcript to the top, drag-select from the first token through the token just before 「momit.fm は」 (ASR: 「AMITFM」 etc.; the ep102 first line read 「はい 始 め ます ᐱ AMITFM は IT 企 業 で…」), press `Delete`, and confirm the first visible word is now the show name. The drag-select + `Delete` mechanics are the same ones verified for the filler misses; the only unverified part is whether the leading pause marker (ᐱ) needs to be in the selection. Do this before the intro overlay so 0:00 is the new start. ep102 was published without this cut.
 - **Intro/outro overlay**: `Your media` → Audio → click the asset. It inserts at the playhead on an overlay track and does not extend the runtime. Put the playhead at 0:00 by clicking the first transcript word (`Home` does nothing; clicking the ruler is imprecise). For the outro, click the last word, zoom the timeline (`+` ×6), click the ruler at end − 8 s, then insert. Overlays are anchored to content: later cuts move the outro with the end, so re-placement after extra cuts was not needed.
 - **Export**: top-right `Export` → `Export` → Audio tab → quality **MP3** (default is WAV HD) → `Export audio only`. Ready in ~1 min under Project → Exports.
 - **Downloads need the user's permission first — and the Exports-tab `Download` button saves the mp3 immediately with no menu.** Ask before clicking it. The transcript is Recordings → Tracks → Transcript → `Download` → *Transcript*. Then Step 8.3–8.5 as usual.

@@ -21,7 +21,7 @@ This is a Next.js-based podcast website for momit.fm, a Japanese parenting and t
 ### Podcast Release Workflow
 Skills under `.claude/skills/` (auto-discovered by Claude Code). Invoke by name with the episode number:
 - `release-episode` — Full guided workflow (orchestrates the skills below + PR flow)
-- `edit-riverside` — Edit the recording in Riverside via MCP (Magic Audio, pause removal, 「なんか」「あの」 cuts, intro/outro overlay) and export
+- `edit-riverside` — Edit the recording in Riverside via MCP, or via the browser fallback on plans without MCP (Magic Audio, pause removal, 「なんか」「あの」「ちょっと」 cuts, opening cut, intro/outro overlay) and export
 - `convert-transcript` — Convert Riverside transcript to JSON
 - `generate-titles` — Generate 10 title candidates
 - `generate-shownote` — Generate episode description from transcript
