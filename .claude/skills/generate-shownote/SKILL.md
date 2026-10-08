@@ -64,7 +64,7 @@ Generate a plain text description following momit.fm's established style.
 🎶 Intro Crafted by [@kirillovlov2983](https://www.youtube.com/@kirillovlov2983)
 ```
 
-> **momit hub ブロック**: その回に紹介する最新記事がある場合のみ含める。記事がなければこのブロック（区切り線 + 「momit hub更新しました」 + 記事タイトル）を省略し、フィードバック募集ブロックから始める。
+> **momit hub ブロック**: 判定ルールは `episode-style-guide.md` の「momit hub ブロック」が単一の真実。要点: hub.momit.fm の最新記事を取得し、`rss.art19.com/momitfm` のどれかの `<description>` に同じ URL が既にあれば紹介済みとみなして載せない。未紹介の新記事がなければこのブロック（区切り線 + 「momit hub更新しました」 + 記事タイトル）を省略し、フィードバック募集ブロックから始める。
 >
 > **リンクはハイパーリンク（HTML アンカー）で**: Art19 の Description は HTML リッチテキスト。生 URL や `テキスト (URL)` ではなく、表示テキストにハイパーリンクを設定する（記事は**タイトル文字列自体**にリンクを貼り、別行の生 URL は置かない）。上記の `[テキスト](URL)` は貼り付け先のリンク対象を示す表記。固定リンク先:
 > - `#momitfm` → `https://x.com/search?q=momitfm`

@@ -88,7 +88,7 @@
 - **フォーマット**: 本文は会話調のテキスト。Art19 の Description は HTML リッチテキストなので、リンクは生 URL や `テキスト (URL)` ではなく表示テキストにハイパーリンク（アンカー）を設定する
 - **リンク先（固定）**: `#momitfm`→`https://x.com/search?q=momitfm`、`お便りフォーム`→`https://docs.google.com/forms/d/e/1FAIpQLSfwtvdBRjwhWyI4wvpX42knaLbQ3Ac05XVwd0mr4GFvYmT1wg/viewform`、`@_yukamiya`→`https://x.com/_yukamiya`、`@m2vela`→`https://x.com/m2vela`、`@kirillovlov2983`→`https://www.youtube.com/@kirillovlov2983`。記事はタイトル文字列自体にリンクを貼る
 - **フッター**: 3 ブロック構成（① momit hub更新 ② フィードバック募集中 ③ Credits）を区切り線で区切る。`Credits` の `@_yukamiya & @m2vela`、`@kirillovlov2983` は固定
-- **momit hub ブロック**: https://hub.momit.fm/ の最新記事（`/wp-json/wp/v2/posts?per_page=1&orderby=date` で確認）を載せる。ただし**過去エピソードの Description で既に紹介済みの記事は載せない**（`rss.art19.com/momitfm` の直近 description に同じ URL があれば紹介済み）。新しい未紹介記事がなければブロックごと省略し、フィードバック募集ブロックから始める（2026-10-08 ルール化）
+- **momit hub ブロック**: https://hub.momit.fm/ の最新記事（`/wp-json/wp/v2/posts?per_page=1&orderby=date` で確認）を載せる。ただし**過去エピソードの Description で既に紹介済みの記事は載せない**（`curl -s https://rss.art19.com/momitfm | grep -c '<記事URL>'` が 1 以上なら、どの回であれ紹介済み。直近 1 回だけ見ない）。新しい未紹介記事がなければブロックごと省略し、フィードバック募集ブロックから始める（2026-10-08 ルール化）
 
 ### 実例: Episode 85
 
