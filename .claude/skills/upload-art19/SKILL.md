@@ -52,7 +52,7 @@ Give the user the edit URL (`.../episodes/{uuid}/edit`) and ask them to upload `
 - Reload the edit page. Read the audio duration from the page text (format `00:MM:SS.ss`, shown next to the Post-Roll 1 marker).
 - Compute midpoint = duration / 2 (round to the second).
 - Click "New Marker" → menu appears → click "Ad Insertion Point". A new marker panel opens (defaults to Pre-Roll @ playhead).
-- Set the marker timestamp: `form_input` the panel's timestamp textbox (class `spinner-9`) to `00:MM:SS.00`.
+- Set the marker timestamp: the new marker tracks the **Selection** textbox above the markers list (class `spinner-9c`, verified 2026-10); `form_input` it to `00:MM:SS.00` while the marker panel is open and the marker's time follows. (The older `spinner-9` textbox inside the panel no longer exists.)
 - Switch type to Mid-Roll via the JS radio recipe (fact 6).
 - Verify the markers list shows `Mid-Roll 1 @ <midpoint>` → click "Save & Close".
 
